@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>发布订阅</title>
+	</head>
+
+	<body>
+		
+		<!--实现的发布订阅-->
+		<script>
+			
+			function Dep(){
+				this.subs = [];//订阅数组，存放监听函数
+			}
+			
+			Dep.prototype = {
+				addSub:function(sub){
+					this.subs.push(sub)
+				},
+				notify:function(){
+					// 绑定的方法，都有一个update方法
+					this.subs.forEach(function(sub){
+						sub.update();//发布的时候，触发监听函数绑定的方法
+					});
+				}
+			}
+			
+			// 监听函数
+			// 通过Watcher这个类创建的实例，都拥有update方法
+			function Watcher(fn){
+				this.fn = fn;
+			}
+			
+			Watcher.prototype.update = function(){
+				this.fn();// 将fn放到实例上，发布的时候会触发这个函数
+			}
+			
+		</script>
+		<script type="text/javascript">
+			let watcher = new Watcher(function(){
+				console.log(1111);
+			});
+			let watcher2 = new Watcher(function(){
+				console.log(2222);
+			});
+			
+			let dep = new Dep();
+			
+			dep.addSub(watcher);//订阅
+			dep.addSub(watcher2);//订阅
+			
+			
+			dep.notify();//发布
+		</script>
+	</body>
+
+</html>

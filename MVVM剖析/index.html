@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="app">
+			<h1>{{singer}}{{song}}</h1>
+			<p>《{{album.name}}》是{{singer}}2005年11月发行的专辑</p>
+			<p>主打歌为{{album.theme}}</p>
+			<p>作词人为{{singer}}等人。</p>
+			为你弹奏肖邦的{{album.theme}}
+			<p>发布时间：<input v-model="publishDate" type="text" /></p>
+			<p>曲名字：<input v-model="album.name" type="text" /></p>
+			<p>评价：{{commented}}</p>
+			<p>{{pingfeng}}</p>
+		</div>
+		<!--实现的mvvm-->
+		<script src="mvvm.js"></script>
+		<script>
+			// 写法和Vue一样
+			let mvvm = new Mvvm({
+				el: '#app',
+				data: { // Object.defineProperty(obj, 'song', '发如雪');
+					song: '发如雪',
+					album: {
+						name: '十一月的萧邦',
+						theme: '夜曲'
+					},
+					singer: '周杰伦',
+					publishDate: "2018-09-09"
+				},
+				computed: {
+					commented: function() {
+						return this.singer + "是个不错的歌手";
+					},
+					pingfeng: function() {
+						return this.album.name + "评分90"
+					}
+				},
+				mounted:function(){
+					let self = this;
+					setTimeout(() => {
+						self.song = "xiugai_青花瓷";
+						self.singer = "xiugai_周杰伦";
+						self.publishDate = "2016-12-23"
+			            console.log('所有事情都搞定了');
+			        }, 1500);
+				}
+			});
+		</script>
+	</body>
+
+</html>

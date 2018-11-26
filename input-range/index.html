@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!--可视区域的定义，如屏幕缩放等。告诉浏览器如何规范的渲染网页-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<!--ie和chrome中最佳的兼容模式-->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!--启用 webapp 模式, 会隐藏工具栏和菜单栏，和其它配合使用。-->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--在webapp模式下，改变顶部状态条的颜色。-->
+		<meta name="Copyright" content="mlrc">
+		<!--版权所有-->
+		<meta name="format-detection" content="telephone=no">
+		<title>range</title>
+		<script src="vue-2.3.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.range-box{
+				width: 90%;
+				height: 100px;
+				margin: 100px auto;
+				position: relative;
+			}
+			/*去除系统默认的样式*/
+			.range-box input[type=range] {
+				-webkit-appearance: none;
+				width: 100%;
+				border-radius: 0px;
+				/*这个属性设置使填充进度条时的图形为圆角*/
+				background: -webkit-linear-gradient(#4e7fff, #4e7fff);
+				background: -moz-linear-gradient(#4e7fff, #4e7fff);
+				background: -o-linear-gradient(#4e7fff, #4e7fff);
+				background: -webkit-gradient(linear, 0 0, 0 100%, from(#4e7fff), to(#4e7fff));
+				background: linear-gradient(#4e7fff, #4e7fff) no-repeat;
+				background-size: 0% 100%;
+				background-color: #f2f2f2;
+				position: absolute;
+				top: 50px;
+			}
+			
+			.range-box input[type=range]::-webkit-slider-thumb {
+				-webkit-appearance: none;
+			}
+			
+			
+			/*给滑动轨道(track)添加样式*/
+			
+			.range-box input[type=range]::-webkit-slider-runnable-track {
+				height: 1px;
+			}
+			
+			.range-box input[type=range]:focus {
+				outline: none;
+			}
+			
+			
+			/*给滑块(thumb)添加样式*/
+			
+			.range-box input[type=range]::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				height: 80px;
+				width: 80px;
+				border-radius: 50%;
+				margin-top: -35px;
+				/*使滑块超出轨道部分的偏移量相等*/
+				background-image: url(slide.png);
+				background-size: 100%;
+				background-repeat: no-repeat;
+			}
+			.range-box.active input[type=range]::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				height: 80px;
+				width: 80px;
+				border-radius: 50%;
+				margin-top: -35px;
+				/*使滑块超出轨道部分的偏移量相等*/
+				background-image: url(slide-active.png);
+				background-size: 100%;
+				background-repeat: no-repeat;
+			}
+			.back{
+				position: absolute;
+				width: 100%;
+				height: 10px;
+				top: 50px;
+				background-color: #F2F2F2;
+				
+			}
+			.slecr{
+				position: absolute;
+				width: 33.33%;
+				height: 10px;
+				border-radius: 5px;
+				background-color: #deccaa;
+				transition: left 0.3s linear;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="range-box" id="demo" v-bind:class="{'active':active}">
+			<div class="back">
+				<span class="slecr" :style="{left:backLeft}"></span>
+			</div>
+			<input type="range" v-model="rangeValue" v-on:touchstart="rangeMousedown()" v-on:change="rangeMouseUp()"min="0" max="100" step="0.1"/>
+		</div>
+		<script>
+			var vue = new Vue({
+				el: "#demo",
+				data: {
+					rangeValue:10,
+					active:false
+				},
+				computed:{
+					backLeft:function(){
+						if(this.rangeValue<33.3){
+							return 0
+						}else if(this.rangeValue>33.3 && this.rangeValue<66.6){
+							return "33.33%"
+						}else{
+							return "66.66%"
+						}
+					}
+				},
+				methods:{
+					rangeMousedown:function(){
+						this.active = true;
+					},
+					rangeMouseUp:function(){
+						this.active = false;
+						if(this.rangeValue<33.3){
+							this.rangeValue = 10;
+						}else if(this.rangeValue>33.3 && this.rangeValue<66.6){
+							this.rangeValue = 50;
+						}else{
+							this.rangeValue = 94;
+						}
+					}
+				}
+			});
+		</script>
+
+	</body>
+
+</html>
