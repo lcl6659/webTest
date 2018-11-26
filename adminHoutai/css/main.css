@@ -1,0 +1,29 @@
+.right-content{
+	min-height: 500px;
+	border-left: 1px solid #E8E8E8;
+}
+.leftTopDelete{
+	position: relative;
+}
+.leftTopDelete:before{
+	content:'×';
+	display: block;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height:20px;
+	background-color: red;
+	color: white;
+	font-size: 15px;
+	top:-8px;
+	left: 6px;
+	cursor: pointer;
+	border-radius: 50%;
+}
+
+
+.yingcang{
+	display: none;
+}
+

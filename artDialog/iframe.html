@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/artDialog.source.js?skin=aero" type="text/javascript" charset="utf-8"></script>
+		<script src="js/plugins/iframeTools.source.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div>页面内容</div>
+		<input type="button" value="关闭" id="back"/>
+		<script type="text/javascript">
+			
+			$(function() {
+				$("#back").click(function() {
+					art.dialog.data('test', "222");
+					var p =  art.dialog.data('test');
+					var origin = artDialog.open.origin;
+					origin.backData = p+"back";
+					art.dialog.close();
+				});
+			});
+		</script>
+	</body>
+</html>

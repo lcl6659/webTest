@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<meta charset='utf-8'>
+
+	<head>
+		<link rel='stylesheet' type='text/css' href='../../public/css/bootstrap.min.css'>
+		<link rel='stylesheet' type='text/css' href='../../css/main.css'>
+		<script type='text/javascript' src="../../public/js/jquery-1.7.2.min.js"></script>
+		<script type='text/javascript' src="../../public/js/bootstrap.min.js"></script>
+		<script type='text/javascript' src="../../js/main.js"></script>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="name" class="col-sm-2 control-label">姓名</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="description" class="col-sm-2 control-label">描述</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="3" id="description"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="headImgUpload" class="col-sm-2 control-label">头像</label>
+							<div class="col-sm-10">
+								<input type="file" id="headImgUpload">
+								<br />
+								<div class="row">
+									<!--添加修改下面img的src属性-->
+									<div class="col-xs-4 col-md-2" id="headImg">
+										<a href="#" class="thumbnail">
+											<img src="http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04!120"
+												 data-path='http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04'>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="photos" class="col-sm-2 control-label">作品</label>
+							<div class="col-sm-10">
+								<input type="file" id="photos">
+								<br />
+								<div class="row" id="photos_arr">
+									<!--图片作品-->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="button" id="submitData" class="btn btn-info btn-lg">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+	<div id="elemetClone" class="yingcang">
+		<div class="col-xs-4 col-md-2 leftTopDelete photoImg">
+			<a class="thumbnail">
+				<img src="" img-path=''>
+			</a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			//删除添加作品
+			$('#photos_arr').on('click','.leftTopDelete',function(){
+				$(this).remove();
+			});
+			
+			
+			//提交操作
+			$('#submitData').click(function(){
+				var name = $('#name').val();//姓名
+				var description = $('#description').val();//描述
+				var headImgPath = $('#headImg').find('img').attr('data-path');//头像
+				var photos = getPhotos();//作品数组，可能为空数组
+				
+				if(name==''){
+					alert('姓名不能不填');
+					return;
+				}
+				
+				var addUrl = '';//这个是后台的添加路由，异步操作
+				
+				//传给后台的数据
+				var data = {
+					'name':name,
+					'description':description,
+					'headImgPath':headImgPath,
+					'photos':photos
+				}
+				$.post(addUrl,data,function(data){
+					if(data.success){
+						alert('添加成功');
+						clearData();
+					}else{
+						alert('添加失败');
+					}
+				})
+			});
+			
+		});
+		
+		/*
+		 * dom操作，添加作品
+		 * src:图片地址
+		*eg:addPhoto('http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04');
+		*/
+		function addPhoto(src){
+			var $_photoImg_clone = $('#elemetClone').find('.photoImg').clone();
+			$_photoImg_clone.find('img').attr('src',src+'!120').attr('img-path',src);//img-path链接原地址，提交时区这个值提交
+			$('#photos_arr').append($_photoImg_clone);
+		}
+		
+		/*
+		 * dom操作，修改头像
+		 * src:新头像的图片地址
+		 * */
+		function updateHeadImg(src){
+			$('#headImg').find('img')
+				.attr('src',src+'!120')
+				.attr('data-path',src);
+		}
+		
+		
+		//获取作品数据，返回地址数组
+		function getPhotos(){
+			var photos = [];
+			var $_photos = $('#photos_arr').find('img');
+			$_photos.each(function(){
+				photos.push($(this).attr('img-path'));
+			});
+			return photos;
+		}
+		
+		
+		//清空输入的数据，重新添加
+		function clearData(){
+			$('#name').val('');//姓名
+			$('#description').val('');//描述
+			$('#headImg').find('img')
+				.attr('data-path','http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04')
+				.attr('src','http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04!120');//头像
+			$('#photos_arr').empty();
+		}
+		
+	</script>
+
+</html>

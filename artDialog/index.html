@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>artDialog打开iframe</title>
+		<link rel="stylesheet" type="text/css" href="js/skins/aero.css" />
+		<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/artDialog.source.js?skin=aero" type="text/javascript" charset="utf-8"></script>
+		<script src="js/plugins/iframeTools.source.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<input type="button" value="出现弹窗" id="btn" />
+		<script type="text/javascript">
+			var backData;
+			$(function() {
+				$("#btn").click(function() {
+					art.dialog.data('test', "222");
+					art.dialog.open('iframe.html', {
+						title: '页面标题',
+						width: 900,
+    					height: 600
+					}, false);
+
+				});
+			});
+		</script>
+	</body>
+
+</html>

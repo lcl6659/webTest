@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<meta charset='utf-8'>
+
+	<head>
+		<title>摄影展后台</title>
+		<link rel='stylesheet' type='text/css' href='../../public/css/bootstrap.min.css'>
+		<link rel='stylesheet' type='text/css' href='../../css/main.css'>
+		<script type='text/javascript' src="../../public/js/jquery-1.7.2.min.js"></script>
+		<script type='text/javascript' src="../../public/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../public/js/artDialog/artDialog.js?skin=aero"></script>
+		<script type="text/javascript" src="../../public/js/artDialog/iframeTools.js"></script>
+		<script type='text/javascript' src="../../js/main.js"></script>
+	</head>
+
+	<body>
+		<!--顶部导航-->
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">首届南京20大新锐婚礼摄影大赛后台</a>
+				</div>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3 col-md-1 leftNav" id="leftNav">
+					<ul class="nav nav-pills nav-stacked">
+						<li role="presentation"><a href="../photographer/photographer.html">摄影师</a></li>
+						<li role="presentation"><a href="#">新娘</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-9 col-md-11 right-content">
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<button type="button" class="btn btn-info btn-lg" id="add">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								添加
+							</button>
+						</div>
+					</div>
+					<hr />
+					<div class="row">
+						
+						<div class="col-sm-4 col-md-2 oneBody">
+							<div class="thumbnail">
+								<img src="http://img.yihunqing.net/juximao/huodong/njxn/hytd_lrj_vedio.png!240f">
+								<div class="caption text-center">
+									<h4>这个是新娘1</h4>
+									<p></p>
+									<p>
+										<button class="btn btn-primary update" data-id=''>修改</button> 
+										<button class="btn btn-danger delete" data-id=''>删除</button>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4 col-md-2 oneBody">
+							<div class="thumbnail">
+								<img src="http://img.yihunqing.net/juximao/huodong/njxn/hytd_lrj_vedio.png!240f">
+								<div class="caption text-center">
+									<h4>这个是新娘2</h4>
+									<p></p>
+									<p>
+										<button class="btn btn-primary update" data-id=''>修改</button> 
+										<button class="btn btn-danger delete" data-id=''>删除</button>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4 col-md-2 oneBody">
+							<div class="thumbnail">
+								<img src="http://img.yihunqing.net/juximao/huodong/njxn/hytd_lrj_vedio.png!240f">
+								<div class="caption text-center">
+									<h4>这个是新娘3</h4>
+									<p></p>
+									<p>
+										<button class="btn btn-primary update" data-id=''>修改</button> 
+										<button class="btn btn-danger delete" data-id=''>删除</button>
+									</p>
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function() {
+			setLeftActive(1);
+			
+			$('#add').click(function(){
+				art.dialog.open('add.html', {
+					width: 1000,
+					lock: true,
+					title: '添加摄影师'
+				});
+			})
+			
+			$('.update').click(function(){
+				var id = $(this).attr('data-id');
+				var url = 'update.html';//这个使用这个id拼出一个后台路由，取到摄影师数据后，跳转到修改页面
+				art.dialog.open(url, {
+					width: 1000,
+					lock: true,
+					title: '修改摄影师'
+				});
+				
+			});
+			
+			$('.delete').click(function(){
+				var _this = this;
+				var id = $(this).attr('data-id');
+				var d = art.dialog({
+					width: 400,
+				    title: '提示',
+				    content: '确认删除这个摄影师吗？',
+				    okValue: '确定',
+				    ok: function () {
+				    	/*
+				    	 * //暂时注释到时和后台联调
+				    	 * var deleteUrl = '';//删除路由，异步删除
+				        $.post(deleteUrl,{id:id},function(data){
+				        	if(data.success){
+				        		$(_this).parents('.oneBody').remove();
+				        	}
+				        });*/
+				       $(_this).parents('.oneBody').remove();
+				    },
+				    cancelValue: '取消',
+				    cancel: function () {}
+				});
+				d.show();
+			});
+			
+		});
+		
+	</script>
+
+</html>

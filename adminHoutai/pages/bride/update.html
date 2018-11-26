@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<meta charset='utf-8'>
+
+	<head>
+		<link rel='stylesheet' type='text/css' href='../../public/css/bootstrap.min.css'>
+		<link rel='stylesheet' type='text/css' href='../../css/main.css'>
+		<script type='text/javascript' src="../../public/js/jquery-1.7.2.min.js"></script>
+		<script type='text/javascript' src="../../public/js/bootstrap.min.js"></script>
+		<script type='text/javascript' src="../../js/main.js"></script>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="brideName" class="col-sm-2 control-label">新娘姓名</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="brideName" value="{{brideName}}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="groomName" class="col-sm-2 control-label">新郎姓名</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="groomName" value="{{groomName}}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="mobileNumber" class="col-sm-2 control-label">手机号</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="mobileNumber" value="{{mobileNumber}}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="headImgUpload" class="col-sm-2 control-label">头像</label>
+							<div class="col-sm-10">
+								<input type="file" id="headImgUpload">
+								<br />
+								<div class="row">
+									<!--添加修改下面img的src属性-->
+									<div class="col-xs-4 col-md-2" id="headImg">
+										<a href="#" class="thumbnail">
+											<img src="http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04!120"
+												 data-path='http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04'>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="button" id="submitData" class="btn btn-info btn-lg">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+	<div id="elemetClone" class="yingcang">
+		<div class="col-xs-4 col-md-2 leftTopDelete photoImg">
+			<a class="thumbnail">
+				<img src="" img-path=''>
+			</a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			//删除添加作品
+			$('#photos_arr').on('click','.leftTopDelete',function(){
+				$(this).remove();
+			});
+			
+			
+			//提交操作
+			$('#submitData').click(function(){
+				var brideName = $('#brideName').val();//新娘姓名
+				var groomName = $('#groomName').val();//新郎姓名
+				var mobileNumber = $('#mobileNumber').val();//描述
+				var headImgPath = $('#headImg').find('img').attr('data-path');//头像
+				
+				if(brideName=='' || groomName==''){
+					alert('新郎和新娘的名字都要填写');
+					return;
+				}
+				
+				var addUrl = '';//这个是后台的添加路由，异步操作
+				
+				//传给后台的数据
+				var data = {
+					'brideName':brideName,
+					'groomName':groomName,
+					'mobileNumber':mobileNumber,
+					'headImgPath':headImgPath
+				}
+				$.post(addUrl,data,function(data){
+					if(data.success){
+						alert('添加成功');
+						clearData();//清空数据，重新添加
+					}else{
+						alert('添加失败');
+					}
+				})
+			});
+			
+			
+		});
+		
+		
+		/*
+		 * dom操作，修改头像
+		 * src:新头像的图片地址
+		 * */
+		function updateHeadImg(src){
+			$('#headImg').find('img')
+				.attr('src',src+'!120')
+				.attr('data-path',src);
+		}
+		
+		
+		//清空输入的数据，重新添加
+		function clearData(){
+			$('#brideName').val('');//新娘
+			$('#groomName').val('');//新郎
+			$('#mobileNumber').val('');
+			$('#headImg').find('img')
+				.attr('data-path','http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04')
+				.attr('src','http://img.yihunqing.net/img/2016/5/25/ecbcbb421375405183ff2d104cf9ea04!120');//头像
+			
+		}
+		
+	</script>
+
+</html>
