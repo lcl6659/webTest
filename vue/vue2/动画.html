@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>动画</title>
+		<script src="../js/vue-2.3.0.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			.bounce-enter-active {
+				display: inline-block;
+				animation: bounce-in .5s;
+			}
+			
+			.bounce-leave-active {
+				display: inline-block;
+				animation: bounce-out .5s;
+			}
+			
+			@keyframes bounce-in {
+				0% {
+					transform: scale(0);
+				}
+				50% {
+					transform: scale(1.5);
+				}
+				100% {
+					transform: scale(1);
+				}
+			}
+			
+			@keyframes bounce-out {
+				0% {
+					transform: scale(1);
+				}
+				50% {
+					transform: scale(1.5);
+				}
+				100% {
+					transform: scale(0);
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="demo">
+			<button v-on:click="changeShow">切换</button><br />
+			<transition name="bounce">
+				<p v-if="show">vue动画</p>
+			</transition>
+		</div>
+		<script>
+			new Vue({
+				el: "#demo",
+				data: {
+					show: true
+				},
+				methods: {
+					changeShow: function() {
+						this.show = !this.show;
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>

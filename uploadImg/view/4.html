@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+		<script src="../js/jquery.previewimg.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div style="width:90px; height:110px; overflow:hidden; border:1px solid red;">
+			<div id="imgDiv"> </div>
+		</div>
+		<br>
+		<input type="file" value="上传文件">
+
+		<script>
+			$(document).ready(function() {
+				$("input").uploadPreview({
+					width: 90,
+					height: 110,
+					imgDiv: "#imgDiv"
+				});
+			});
+		</script>
+	</body>
+
+</html>

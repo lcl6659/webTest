@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue组件快速注册语法糖</title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<my-component></my-component>
+		</div>
+		<script type="text/javascript">
+			//一个步骤完成定义和注册 组件
+			Vue.component('my-component',{
+				template:"<div style='width:200px;height:200px;border:1px solid red;padding:10px'>这是一个快速定义注册的组件</div>"
+			});
+			
+			var vm =new Vue({
+				el:"#app"
+			});
+			
+		</script>
+	</body>
+</html>

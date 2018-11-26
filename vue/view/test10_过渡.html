@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue过渡</title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/vue-animated-list.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			/* 必需 */
+			.expand-transition {
+			  transition: all 0.3s ease;
+			  width: 100%;
+			  height: 30px;
+			  padding: 10px;
+			  background-color: #eee;
+			  overflow: hidden;
+			}
+			
+			/* .expand-enter 定义进入的开始状态 */
+			/* .expand-leave 定义离开的结束状态 */
+			.expand-enter {
+			  height: 0px;
+			  padding: 0 10px;
+			  opacity: 0;
+			}
+			.expand-leave {
+			  height: 0px;
+			  padding: 0 10px;
+			  opacity: 0;
+			}
+			
+			
+			.bounce-transition{
+				width: 300px;
+				height: 300px;
+				background-color: #080808;
+				margin-top: 30px;
+			}
+			.bounce-enter{
+				animation: bounce-in 1s;
+			}
+			.bounce-leave{
+				animation: bounce-out 1s;
+			}
+			@keyframes bounce-in{
+				 0% {
+				    transform: scale(0);
+				  }
+				  50% {
+				    transform: scale(1.5);
+				  }
+				  100% {
+				    transform: scale(1);
+				  }
+			}
+			@keyframes bounce-out {
+			  0% {
+			    transform: scale(1);
+			  }
+			  50% {
+			    transform: scale(1.5);
+			  }
+			  100% {
+			    transform: scale(0);
+			  }
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<h1>过渡</h1>
+			
+			<div v-if='show' transition='expand'>transition='expand'</div>
+			<button v-on:click='changeShow'>toogle_01</button>
+			<br />
+			
+			<div v-if='show2' :transition='transitionName'>:transition='transitionName'</div>
+			<button @click='changeShow2'>toogle-02</button>
+			
+			
+			<h1>动画</h1>
+			<div v-if='show3' transition='bounce'></div>
+			<button @click='changeShow3'>toogle-03</button>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					show:true,
+					show2:true,
+					show3:true,
+					transitionName:'expand'
+				},
+				methods:{
+					changeShow:function(){
+						this.show = !this.show;
+					},
+					changeShow2:function(){
+						this.show2 = !this.show2;
+					},
+					changeShow3:function(){
+						this.show3 = !this.show3;
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>视屏层级</title>
+		<script type="text/javascript" src="jquery.js" ></script>
+		<script type="text/javascript" src="jwplayer/jwplayer.js" ></script>
+		<script type="text/javascript" src="jwplayer/jwpsrv.js" ></script>
+		<style type="text/css">
+			#myplayer_logo{
+				display: none!important;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='myplayer'></div> 
+		
+		<script type='text/javascript'>      
+			jwplayer('myplayer').setup({
+			    'flashplayer': 'jwplayer/jwplayer.flash.swf',
+				'image': 'source/1.png',
+			    'id': 'playerID',
+			    'width': '600px',
+			    'height': '400px',
+				'aspectratio':'10:6',
+			    'file': 'http://jq22com.qiniudn.com/jq22com.mp4'
+			});
+		</script>  
+	</body>
+</html>

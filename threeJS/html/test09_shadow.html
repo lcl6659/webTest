@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>阴影</title>
+		<script src="../js/three.js"></script>
+		<style type="text/css">
+			*{
+				margin: 0px;
+				padding: 0px;
+				border: none;
+			}
+			#canvas-frame{
+				width: 100%;
+				height: 800px;
+				background-color: #EEEEEE;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="canvas-frame"></div>
+		<script type="text/javascript">
+			var height = document.getElementById("canvas-frame").clientHeight;
+			var width = document.getElementById("canvas-frame").clientWidth;
+			
+			var scene = new THREE.Scene();
+			
+			var camera = new THREE.PerspectiveCamera(45,width/height,1,40);
+			camera.position.set(0,5,-8);
+			camera.up.x = 0;
+			camera.up.y = 1;
+			camera.up.z = 0;
+			camera.lookAt(new THREE.Vector3(0,0,0));
+			
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize(width,height);
+			document.getElementById("canvas-frame").appendChild(renderer.domElement);
+			renderer.setClearColor(0xffffff);
+			renderer.shadowMap.enable = true;
+			//renderer.shadowMapEnabled = true;//告诉渲染器渲染阴影
+			renderer.shadowMapSoft = true;//想实现软阴影的效果
+			
+			
+			var plane = new THREE.Mesh(new THREE.PlaneGeometry(8,8,12,12),new THREE.MeshLambertMaterial({color:0xcccccc}));
+			plane.rotation.x = -Math.PI/2;
+			plane.position.y = -1;
+			plane.receiveShadow = true;//接收阴影的物体调用
+			scene.add(plane);
+			
+			var cube = new THREE.Mesh(new THREE.CubeGeometry(1,1,1),new THREE.MeshLambertMaterial({color:0x00ff00}));
+			cube.position.x = 2;
+			cube.castShadow = true;//所有要产生阴影的物体调用
+			scene.add(cube);
+			
+			var light = new THREE.SpotLight(0xffff00,1,100,Math.PI/6,25);//定义聚光灯
+			light.position.set(2,5,4);
+			light.target = cube;//聚光灯的目标
+			light.castShadow = true;//光源以及所有要产生阴影的物体调用
+			/*light.shadowCameraNear = 2;
+			light.shadowCameraFar = 10;
+			light.shadowCameraFov = 30;*/
+			light.shadow.camera.near = 2;
+			light.shadow.camera.far = 10;
+			light.shadow.camera.fov = 30;
+			
+			//light.shadowCameraVisible = true;
+			var Helper = new THREE.CameraHelper(light.shadow.camera);
+			
+			
+			/*light.shadowMapWidth = 1024;
+			light.shadowMapHeight = 1024;*/
+			/*light.shadowDarkness = 0.3;*/
+			light.shadow.mapSize.width = 1024;
+			light.shadow.mapSize.height = 1024;
+			
+			scene.add(light);
+			
+			
+			function circleRender(){
+				renderer.render(scene,camera);
+				requestAnimationFrame(circleRender);
+			}
+			circleRender();
+		</script>
+	</body>
+</html>

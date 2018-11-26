@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>传递数据</title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<my-component msg='hello' user-name='tom' v-bind:say-what='sayWhat'></my-component>
+			<br /><br />
+			<input v-model="sayWhat"/>
+		</div>
+		<script type="text/javascript">
+			Vue.component('my-component',{
+				props:['msg','userName','sayWhat'],
+				template:"<span>{{msg}} {{userName}}：{{sayWhat}}</span>"
+			});
+			
+			var vm = new Vue({
+				el:"#app"
+			});
+		</script>
+	</body>
+</html>

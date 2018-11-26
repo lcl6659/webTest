@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>滑动自动适应的导航</title>
+		<link rel="stylesheet" href="swiper-3.3.1.min.css" />
+		<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="swiper-3.3.1.jquery.min.js"></script>
+		<style type="text/css">
+			body{
+				margin: 0px;
+				padding: 0px;
+			}
+			#swiper-container1 .swiper-slide {
+				line-height: 3 !important;
+				color: #666 !important;
+				font-size: 14px !important;
+				background: #eee !important;
+				text-align: center;
+				transition: background 0.5s;
+			}
+			#swiper-container1 .active-nav {
+				background: #ddd !important;
+			}
+			#swiper-container2 {
+				min-height:500px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="swiper-container" id="swiper-container1">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide active-nav">
+					版块1
+				</div>
+				<div class="swiper-slide">
+					版块2
+				</div>
+				<div class="swiper-slide">
+					版块3
+				</div>
+				<div class="swiper-slide">
+					版块4
+				</div>
+				<div class="swiper-slide">
+					版块5
+				</div>
+				<div class="swiper-slide">
+					版块6
+				</div>
+				<div class="swiper-slide">
+					版块7
+				</div>
+				<div class="swiper-slide">
+					版块8
+				</div>
+			</div>
+		</div>
+		<div class="swiper-container" id="swiper-container2">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide blue-slide">
+					slider1
+				</div>
+				<div class="swiper-slide red-slide">
+					slider2
+				</div>
+				<div class="swiper-slide orange-slide">
+					slider3
+				</div>
+				<div class="swiper-slide blue-slide">
+					slider4
+				</div>
+				<div class="swiper-slide red-slide">
+					slider5
+				</div>
+				<div class="swiper-slide orange-slide">
+					slider6
+				</div>
+				<div class="swiper-slide blue-slide">
+					slider7
+				</div>
+				<div class="swiper-slide red-slide">
+					slider8
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var slideBarNumber=4;//slidebar的每屏数量
+			var mySwiper1 = new Swiper('#swiper-container1', {
+				watchSlidesProgress: true,
+				watchSlidesVisibility: true,
+				slidesPerView: slideBarNumber,
+				onTap: function() {
+					mySwiper2.slideTo(mySwiper1.clickedIndex);
+				}
+			});
+			var mySwiper2 = new Swiper('#swiper-container2', {
+				onSlideChangeStart: function() {
+					updateNavPosition();
+				}
+			});
+
+			function updateNavPosition() {
+				$('#swiper-container1 .active-nav').removeClass('active-nav');
+				var activeNav = $('#swiper-container1 .swiper-slide').eq(mySwiper2.activeIndex).addClass('active-nav');
+				var activeNavIndex = activeNav.index();//mySwiper1当前激活的排序
+				var leftFirstIndex = $('#swiper-container1 .swiper-slide-active').index();//本屏最左边的序号
+				var n = activeNavIndex-leftFirstIndex;
+				if (n>=slideBarNumber && !activeNav.hasClass('swiper-slide-visible')) {
+					var thumbsPerNav = slideBarNumber-1;
+					mySwiper1.slideTo(activeNavIndex - thumbsPerNav);
+				}else if(n<0){
+					mySwiper1.slideTo(activeNavIndex);
+				}
+				
+			}
+		</script>
+	</body>
+
+</html>

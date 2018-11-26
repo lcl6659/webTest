@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>three.js简单实现方块的转动</title>
+		<script src="../js/three.js"></script>
+	</head>
+	<body>
+		
+	</body>
+	<script type="text/javascript">
+			var scene =new THREE.Scene();//定义场景
+			
+			var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,1,1000);
+			
+			var renderer = new THREE.WebGLRenderer({
+				antialias:true//开启反锯齿
+			});
+			
+			//设置canvas背景色(clearColor)和背景色透明度（clearAlpha）  
+    		//renderer.setClearColor(0x000000,0.5); 
+			renderer.setClearColor('#FFFFFF');//renderer默认背景色是黑色
+			
+			renderer.setSize(window.innerWidth,window.innerHeight);//指定渲染器的高宽
+			
+			document.body.appendChild(renderer.domElement);
+			
+			var geometry = new THREE.CubeGeometry(2,2,2);//几何体
+			var material = new THREE.MeshBasicMaterial({color:0xff0088});//材质
+			
+			var cube = new THREE.Mesh(geometry,material);//创建网格对象
+			
+			scene.add(cube);//将方块添加到场景中
+			
+			camera.position.z = 10;//默认位置在坐标原点，相机聚物体距离
+			
+			//循环渲染
+			function render(){
+				requestAnimationFrame(render);
+				
+				cube.rotation.y +=0.001;
+				cube.rotation.x +=0.01;
+				
+				renderer.render(scene,camera);//渲染，也就是在画布上开始画图
+			}
+			
+			render();
+			
+		</script>
+</html>

@@ -1,0 +1,98 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>视屏层级</title>
+		<script type="text/javascript" src="jquery.js" ></script>
+		<script type="text/javascript" src="jwplayer/jwplayer.js"></script>
+		<style type="text/css">
+			.ss{
+				position: absolute;
+				top: 10px;
+				margin-bottom: 20px;
+				z-index: 100;
+			}
+			#myplayer_logo{
+				display: none!important;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='myplayer'></div>
+		<div class="ss">
+			<input type="button" class="player-play" value="Play" />
+			<input type="button" class="player-stop" value="Stop" />
+			<input type="button" class="player-status" value="Status" />
+			<input type="button" class="player-position" value="TimeStamp" />
+			<input type="button" class="player-seek" value="Seek_15s" />
+			<input type="button" class="player-duration" value="Duration" />
+		</div>
+		<script type='text/javascript'>
+			var thePlayer;
+			thePlayer = jwplayer('myplayer').setup({
+				flashplayer: "jwplayer/jwplayer.flash.swf",//调用播放器
+				file: 'source/mov_bbb.mp4',
+				image:'source/1.png',
+				width: '600px',
+				height: '400px',
+				repeat: false
+			});
+
+			//Play Pause  
+			$('.player-play').click(function() {
+				if (thePlayer.getState() != 'PLAYING') {
+					thePlayer.play(true);
+					this.value = 'Pause';
+				} else {
+					thePlayer.play(false);
+					this.value = 'Play';
+				}
+			});
+
+			//Stop  
+			$('.player-stop').click(function() {
+				thePlayer.stop();
+			});
+
+			//Status  
+			$('.player-status').click(function() {
+				var state = thePlayer.getState();
+				var msg;
+				switch (state) {
+					case 'BUFFRING':
+						msg = 'Buffering';
+						break;
+					case 'PLAYING':
+						msg = 'Playing';
+						break;
+					case 'PAUSED':
+						msg = 'Pause';
+						break;
+					case 'IDLE':
+						msg = 'Stop';
+						break;
+				}
+				alert(msg);
+			});
+
+			//get current position  
+			$('.player-position').click(function() {
+				alert(thePlayer.getPosition());
+			});
+
+			//Seek  
+			$('.player-seek').click(function() {
+				if (thePlayer.getState() != 'PLAYING') {
+					thePlayer.play();
+				}
+				thePlayer.seek(15);
+			});
+
+			//get duration  
+			$('.player-duration').click(function() {
+				alert(thePlayer.getDuration());
+			});
+		</script>
+	</body>
+
+</html>

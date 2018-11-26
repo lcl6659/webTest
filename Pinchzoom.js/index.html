@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pinchzoom.js插件实现手指触摸图片放大缩小</title>
+<style>
+.pinch-zoom,.pinch-zoom img{
+	width: 100%;
+	-webkit-user-drag: none;
+	-moz-user-drag: none;
+	-ms-user-drag: none;
+	user-drag: none;
+}
+</style>
+<link rel="stylesheet" href="css/style.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
+	<!-- 代码部分begin -->
+	<div class="page">
+        <div class="pinch-zoom">
+            <div class="description">
+                <h1>Pinchzoom.js</h1>
+                <p>Multi-touch zoom in Javascript</p>
+            </div>
+            <img src="images/111.png"/>
+        </div>
+    </div>
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/pinchzoom.js"></script>
+	<script type="text/javascript">
+	    $(function () {
+	        $('div.pinch-zoom').each(function () {
+	            new RTP.PinchZoom($(this), {});
+	        });
+	    })
+	</script>
+	<!-- 代码部分end -->
+</body>
+</html>

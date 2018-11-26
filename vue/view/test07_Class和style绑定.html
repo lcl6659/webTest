@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue-class和style的绑定</title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.static{
+				width: 100%;
+				height: 100px;
+				background-color: white;
+				margin-bottom: 20px;
+				font-size: 50px;
+				font-weight: bold;
+				text-align: center;
+				color: #F2F2F2;
+				line-height: 100px;
+			}
+			.color-red{
+				background-color: red;
+			}
+			.color-blue{
+				background-color: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<h1>绑定class</h1>
+			<div class="static" v-bind:class="{'color-red':isRed,'color-blue':isBlue}">
+				v-bind:class="{'color-red':isRed,'color-blue':isBlue}"
+			</div>
+			
+			<div class="static" v-bind:class="classObject">
+				v-bind:class="classObject"
+			</div>
+			
+			<div class="static" v-bind:class="[colorRed,colorBlue]">
+				v-bind:class="[colorRed,colorBlue]"
+			</div>
+			
+			<div class="static" v-bind:class="[colorRed,{colorBlue:isBlue}]">
+				v-bind:class="[colorRed,{colorBlue:isBlue}]"
+			</div>
+			
+			<h1>绑定内联样式style</h1>
+			<div class="static" v-bind:style="{backgroundColor:activeColor,fontSize:fontSize+'px'}">
+				v-bind:style="{backgroundColor:activeColor,fontSize:fontSize+'px'}"
+			</div>
+			
+			<div class="static" v-bind:style = "styleObjectA">
+				v-bind:style = "styleObjectA"
+			</div>
+			
+			<div class="static" v-bind:style = "[styleObjectA,styleObjectB]">
+				v-bind:style = "[styleObjectA,styleObjectB]"
+			</div>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:'#app',
+				data:{
+					isRed:false,
+					isBlue:true,
+					classObject:{'color-red':true,'color-blue':false},
+					colorRed:'color-red',
+					colorBlue:'color-blue',
+					activeColor:'#66CCFF',
+					fontSize:25,
+					styleObjectA:{
+						color:'#ffffff',
+						backgroundColor:'#CCCCFF'
+					},
+					styleObjectB:{
+						textDecoration:'underline'
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>History-api实现前端路由</title>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<style type="text/css">
+			body{
+				margin: 0;padding: 0;
+			}
+			.page{
+				width: 100%;
+				height: 600px;
+				font-size: 100px;
+				display: none;
+				color: #FFFFFF;
+			}
+			.show{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #0055AA;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="page" id="home">默认<a href='/index'>index</a></div>
+			<div class="page" id="index">index-page<a href='/my'>my</a></div>
+			<div class="page" id="my">my-page<a href='/aboutUs'>aboutUs</a></div>
+			<div class="page" id="aboutUs">aboutUs-page<a href='/index'>index</a></div>
+		</div>
+		<script type="text/javascript">
+			class Router{
+				constructor(){
+					this.routes = {};
+					this._bindPopState();
+				}
+				init(path){
+					history.replaceState({path:path},null,path);
+					this.routes[path] && this.routes[path]();
+				}
+				_bindPopState(){//监听用户点击浏览器倒退按钮和前进按钮
+					window.addEventListener('popstate',e=>{
+						const path = e.state && e.state.path;
+						console.log(path);
+						this.routes[path] && this.routes[path]();
+					})
+				}
+				route(path,callback){
+					this.routes[path] = callback || function(){}
+				}
+				go(path){
+					history.pushState({path:path},null,path);
+					this.routes[path] && this.routes[path]();
+				}
+			}
+		</script>
+		<script type="text/javascript">
+			window.router = new Router();
+			
+			/*添加路由*/
+			router.route(location.pathname,function(){
+				$("#home").addClass("show").siblings().removeClass("show");
+			});
+			router.route("/index",function(){
+				$("#index").addClass("show").siblings().removeClass("show");
+			});
+			router.route("/my",function(){
+				$("#my").addClass("show").siblings().removeClass("show");
+			});
+			router.route("/aboutUs",function(){
+				$("#aboutUs").addClass("show").siblings().removeClass("show");
+			});
+			
+			//初始化路由  页面
+			router.init(location.pathname);
+			
+			document.querySelector(".container").addEventListener("click",e=>{
+				if(e.target.tagName.toLocaleLowerCase()==='a'){
+					e.preventDefault();
+					router.go(e.target.getAttribute("href"));
+				}
+			})
+			
+		</script>
+	</body>
+</html>

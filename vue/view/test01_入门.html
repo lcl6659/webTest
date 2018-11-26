@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue起步 - hello world</title>
+		<script src="../js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app" :style="{backgroundColor:color}">{{message}}</div>
+		<script type="text/javascript">
+			new Vue({
+				el:'#app',
+				data:{
+					message:'hello world',
+					color:"red"
+				}
+			});
+		</script>
+	</body>
+</html>

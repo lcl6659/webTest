@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<title>Sewise Player直播测试</title>
+</head>
+<body>
+	<div style="width: 900px; height: 650px;margin-left: auto;margin-right: auto;">
+		<!--<script type="text/javascript" src="sewise.player.min.js?server=live&type=http&streamurl=http://pullhls99.a8.com/live/1467699846966089/playlist.m3u8&autostart=true&pid=&shifttime=&buffer=5&lang=zh_CN&logo=http://img.yihunqing.net/img/2016/02/29/0ab52789ca4ae51fa18ede66682adc2f!60&title=LiveVideo&skin=liveWhite"></script>-->
+		<script type="text/javascript" src="sewise.player.min.js"></script>
+		<script type="text/javascript">
+			SewisePlayer.setup({
+				server: "live",
+				type: "rtmp",
+				streamurl: "rtmp://58.240.199.98/livevedio.s0.aicdn.com/juximaolive/12345",
+		        skin: "liveWhite",
+		        title: "直播标题",
+		        lang: 'zh_CN',
+		        autostart:true,
+		        logo:"img/touxiang.png",
+		        poster:"http://img.yihunqing.net/juximao/huodong/njxn/sy_4 (11).jpg"
+			});
+		</script>
+	</div>
+</body>
+</html>

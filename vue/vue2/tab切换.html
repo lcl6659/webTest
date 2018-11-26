@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/vue-2.3.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.tab-box{
+				position: relative;
+				width: 400px;
+				height: 500px;
+				overflow: hidden;
+				margin: auto;
+			}
+			.one-box{
+				width: 100%;
+				height: 500px;
+				position: absolute;
+				padding: 30px;
+				color: #fff;
+				box-sizing: border-box;
+			}
+			.bg01{
+				background-color: #0040FF;
+			}
+			.bg02{
+				background-color: #0077CC;
+			}
+			.bg03{
+				background-color: #2AC845;
+			}
+			@keyframes slideRightIn {
+			    0%{
+			        left:100%;
+			        right: auto;
+			    }
+			    100%{
+			        left: 0;
+			        right: auto;
+			    }
+			}
+			@keyframes slideRightOut {
+			    0%{
+			        left: 0;
+			        right: auto;
+			    }
+			    100%{
+			        left:100%;
+			        right: auto;
+			    }
+			}
+			@keyframes slideLeftOut {
+			    0%{
+			        left: auto;
+			        right: 0;
+			    }
+			    100%{
+			        left:auto;
+			        right: 100%;
+			    }
+			}
+			@keyframes slideLeftIn {
+			    0%{
+			        left: auto;
+			        right: 100%;
+			    }
+			    100%{
+			        left:auto;
+			        right: 0;
+			    }
+			}
+			.slideRightIn-enter-active {
+			    animation: slideRightIn .3s linear;
+			}
+			.slideRightIn-leave-active {
+			    animation: slideLeftOut .3s linear;
+			}
+			
+			.slideLeftIn-enter-active {
+			    animation: slideLeftIn .3s linear;
+			}
+			.slideLeftIn-leave-active {
+			    animation: slideRightOut .3s linear;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="tab-box" id="demo">
+			<div>
+				<button @click="change(0)">1</button>
+				<button @click="change(1)">2</button>
+				<button @click="change(2)">3</button>
+			</div>
+			<transition v-for="(item,index) in items" :name="animate">
+				<div class="one-box" v-show="showIndex==index"  :class="item">
+					cnd才能短时间内参加考试的难处，才能对健康难处就是的，长度呢世纪康城南石道街，肠道内健康才能打开
+					成都市甲壳虫你到数据库，才能对健康你禅道，才能对健康是拿成绩单上
+					才能对健康南城街道才能对健康是
+				</div>
+			</transition>
+			
+		</div>
+		<script>
+			new Vue({
+				el: "#demo",
+				data: {
+					showIndex:0,
+					animate:"slideLeftIn",
+					items:[
+						"bg01","bg02","bg03"
+					]
+				},
+				methods:{
+					change:function(index){
+						if(index<this.showIndex){
+							this.animate = "slideLeftIn";
+						}else{
+							this.animate = "slideRightIn";
+						}
+						this.showIndex = index;
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>直播测试</title>
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<style type="text/css">
+			*{
+				margin: 0;padding: 0;
+			}
+			.video_container{
+				width: 100%;
+				min-height: 500px;
+				transition: height 1s;
+			}
+			.video_body{
+				position: relative;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 100%;
+				background-color: #2288CC;
+				overflow: hidden;
+			}
+			video{
+				width: 100%;
+				height: 100%;
+			}
+			
+			/*播放按钮*/
+			#play{
+				position: absolute;
+				z-index: 20;
+				top:0px;
+				left:0px;
+				right: 0px;
+				bottom: 0px;
+				margin: auto;
+				width: 100px;
+				height: 100px;
+				line-height: 100px;
+				text-align: center;
+				border: 1px solid white;
+				background-color: #5BC0DE;
+				border-radius: 50%;
+				font-size: 20px;
+				color: white;
+			}
+			
+			
+			/*收到礼物展示区域*/
+			#getGifts{
+				position: absolute;
+				left: 0px;
+				bottom: 100px;
+				z-index: 10;
+				width: 70%;
+				height: 160px;
+				background-color: RGBA(204,204,255,0.7);
+				overflow: hidden;
+								
+			}
+			
+			
+			/*发送消息区域*/
+			#sendMsg{
+				width: 100%;
+				height: 60px;
+				background-color: white;
+				position: fixed;
+				z-index: 10;
+				bottom: 0px;
+				left: 0px;
+				line-height: 60px;
+				box-sizing: border-box;
+				padding-top: 10px;
+			}
+			#sendMsg button{
+				width: 15%;
+				height: 40px;
+				float: left;
+				border-top:1px solid #3498DB;
+				border-bottom:1px solid #3498DB;
+			}
+			#sendMsg #barrage{
+				margin-left: 5%;
+				border-right: none;
+				border-left: 1px solid #3498DB;
+			}
+			#sendMsg #sendBarrage{
+				border-right: 1px solid #3498DB;
+			}
+			#sendMsg input{
+				box-sizing: border-box;
+				float: left;
+				width: 60%;
+				height: 40px;
+				margin: 0px;
+				border-left: none;
+				border-right: none;
+				padding-left: 10px;
+				border-top:1px solid #3498DB;
+				border-bottom:1px solid #3498DB;
+				font-size: 15px;
+			}
+			#sendMsg input:focus{
+				outline: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="video_container">
+			<div class="video_body">
+				<video id="myVideo" poster="http://img.yihunqing.net/juximao/huodong/njxn/sy_4 (11).jpg" 
+					src="http://file.yihunqing.net/juximao/huodong/njxn/yftd_jrr_02.mp4" 
+					style="background-color: rgb(0, 0, 0);">
+				</video>
+				<div id="play">播放</div>
+				<div id="barrageContent">
+					<!--弹幕内容-->
+				</div>
+				<div id="getGifts">
+					<!--收到的礼物-->
+				</div>
+				<div id="tools">
+					<!--工具-->
+				</div>
+				<div id="sendMsg">
+					<button id="barrage">开弹幕</button>
+					<input type="text" placeholder="sss"/>
+					<button id="sendBarrage">发送</button>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				setVideoContainerHeight();
+				var myVideo = document.getElementById("myVideo");
+				
+				$('#play').on('click',function(){
+					myVideo.play();
+					if(myVideo.played){
+						$(this).hide();
+					}
+				});
+				
+				
+				$('#myVideo').on('click',function(){
+					
+				});
+				
+				
+				
+				//可以播放了
+				myVideo.addEventListener('canplay',function(){
+					
+				});
+				
+				//设置高度
+				function setVideoContainerHeight(){
+					var screenHeight = window.screen.height-20-65;
+					$('.video_container').css('height',screenHeight+'px');
+				}
+			});
+			
+			
+			
+		</script>
+		
+	</body>
+</html>

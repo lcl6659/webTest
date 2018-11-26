@@ -1,0 +1,45 @@
+﻿<html>  
+<head>
+
+<title>输入汉字转换成拼音首字母js代码</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<script text="text/javascript" src="pinying.js" charset="GBK"></script>  
+<style type="text/css">
+#select11, #txtChinese { width:200px; padding:5px; font-size:14px;}
+</style>  
+</head>  
+<body>
+<script>
+//根据文本框输入的汉字自动获取汉字拼音首字母到下拉列表中，支持多音字，需引入库pinying.js
+function query(){
+    var str = document.getElementById("txtChinese").value.trim();
+    if(str == "") return;
+    var arrRslt = makePy(str);
+    //循环将值到下拉框
+    var option = null;
+    document.getElementById("select11").innerHTML="";//清空下拉框
+    var first = document.getElementById("select11");
+    for(var j=0;j<arrRslt.length;j++){
+				var obj = document.getElementById("select11");
+				obj.add(new Option(arrRslt[j],arrRslt[j]));
+    }
+}
+</script>
+<form name="form1">
+    <table width="800" cellspacing="0" cellpadding="8" align="center">
+    	<tr>
+        	<td>根据文本框输入的汉字自动获取汉字拼音首字母到下拉列表中，支持多音字</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" id="txtChinese" size="20" placeholder="请输入中文字符串" onKeyUp="query()" />
+                <select name="select11" id="select11"></select>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</div>
+</body>
+</html>

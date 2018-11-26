@@ -1,0 +1,35 @@
+﻿.thumb_list li .pic_list_li .memo22,
+.pic_list_li .momo,
+.m_intro{display:none}
+
+#leftObj .pro_sort .promore{display:none}
+.HOT-KEYS{border:1px solid #e7e7e7;width:1200px;overflow:hidden;zoom:1;margin:0 auto 15px;}
+.HOT-KEYS .title{font-size:14px;color:#e92f47;float:left;width:120px;text-align:right;padding:13px 10px;font-weight:bold}
+.HOT-KEYS .content{float:left;width:881px;padding:15px 0;}
+.HOT-KEYS .content a{padding:0 10px;border-right:1px solid #ccc}
+
+.searchformBox{margin:0 auto;position:relative;width: 1200px;display:block!important}
+.searchformBox form{position:absolute;right:20px;top:6px;}
+.searchformBox .serach_input{background:#fff;border:1px solid #e8e8e8;padding:11px ;font-size:12px;margin-right:-4px;width:120px;transition:all 0.2s linear 0s;}
+.searchformBox .btn_serach{width:38px;height:38px;border:0;cursor:pointer}
+.searchformBox:hover .serach_input{width:220px;}
+
+.pro_sort_box .title a{height:16px;overflow:hidden;padding:0}
+.more{top:8px!important}
+.marquee{margin:13px 13px 0!important}
+
+
+.paging{text-align:center;padding:20px 10px 5px}
+.paging a,.paging span{display:inline-block;*display:inline;zoom:1;padding:3px 8px;border:1px solid #d9d9d9;background:#fff;margin:0 5px}
+.paging span{background:#fff;border-color:#fff;color:#111}
+
+.online-qq{width:160px;}
+
+.display_title{padding:20px 0}
+.info_list_intro{text-align:left;padding:0 20px}
+
+#rightObj .contact{padding:2em;}
+
+.touch-box .code,
+.touch-box .code a{color:#777}
+.pic_news_memo {display:none;}

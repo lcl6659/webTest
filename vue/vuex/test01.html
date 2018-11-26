@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/vue-2.3.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/vuex.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<span>{{a.b}}</span>
+		</div>
+		<script>
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					a:{
+						q:"111"
+					}
+				}
+			});
+			
+			Vue.set(vm.a,"b","wwww");
+//			vm.a.b = "aaaaa";
+			
+		</script>
+	</body>
+</html>

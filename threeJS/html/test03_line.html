@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>three.js 画一条直线</title>
+		<script type="text/javascript" src="../js/three.js"></script>
+		<style type="text/css">
+			#canvas-frame{
+				width: 100%;
+				border: none;
+				height: 600px;
+				cursor: pointer;
+				background-color: #EEEEEE;
+			}
+		</style>
+		<script type="text/javascript">
+			var width,height;
+			//初始化场景
+			var scene;
+			function initScene(){
+				scene =new THREE.Scene();
+			}
+		
+			//初始化渲染器
+			var renderer;
+			function initThree(){
+				width = document.getElementById("canvas-frame").clientWidth;
+				height = document.getElementById("canvas-frame").clientHeight;
+				renderer = new THREE.WebGLRenderer({
+					antialias:true//没有锯齿
+				});
+				renderer.setSize(width,height);
+				document.getElementById("canvas-frame").appendChild(renderer.domElement);
+				renderer.setClearColor("#FFFFFF",1.0);//设置渲染器的背景色及其透明度
+			}
+			
+			//初始化相机
+			var camera;
+			function initCamera(){
+				camera = new THREE.PerspectiveCamera(45,width/height,1,10000);
+				camera.position.set(0,1000,0);
+				camera.up.x=0;
+				camera.up.y=0;
+				camera.up.z=1;
+				camera.lookAt({x:0,y:0,z:0});
+			}
+			
+			//初始化灯光
+			var light;
+			function initLight(){
+				light = new THREE.DirectionalLight(0xFF0000,1.0,0);
+				light.position.set(100,100,200);
+				scene.add(light);
+			}
+			
+			
+			//初始化线
+			var cube;
+			function initObject(){
+				var geometry = new THREE.Geometry();
+				var material = new THREE.LineBasicMaterial({vertexColors:true});
+				var color1 = new THREE.Color(0x444444);
+				var color2 = new THREE.Color(0xFF0000);
+				
+				var p1 = new THREE.Vector3(-100,0,100);
+				var p2 = new THREE.Vector3(100,0,-100);
+				geometry.vertices.push(p1);
+				geometry.vertices.push(p2);
+				geometry.colors.push(color1,color2);
+				
+				var line = new THREE.Line(geometry,material,THREE.LineSegments);
+				scene.add(line);
+			}
+			
+			
+			//主函数
+			function threeStart(){
+				initThree();
+				initCamera();
+				initScene();
+				initLight();
+				initObject();
+				
+				renderer.clear();
+				renderer.render(scene,camera);
+			}
+		
+			
+		</script>
+	</head>
+	<body onload="threeStart();">
+		<div id="canvas-frame"></div>
+	</body>
+</html>

@@ -1,0 +1,157 @@
+/*common*/
+* { margin: 0; padding: 0; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);}
+img { vertical-align: bottom; }
+li { list-style: none; }
+html { font-size: 90px; font-size: calc(100vw/3.75); }
+i, a { text-decoration: none; font-style: normal; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; }
+body {padding-top:0;font-size: 16%; overflow-x:hidden;color: #333; }
+::-webkit-input-placeholder { color: #cfcfcf; }
+input[type='number']::-webkit-inner-spin-button { -webkit-appearance: none;}
+input[type='number']::-webkit-outer-spin-button {-webkit-appearance: none;}
+
+/*index*/
+html{
+    width: 100%;height: 100%;
+}
+body{
+    width: 100%;height: 100%;
+}
+.main-content{
+    width: 100%;height: 100%;position: relative;z-index: 10;
+}
+.main-content .swiper-wrapper{
+    width: 100%;height: 100%;
+}
+.main-content .swiper-wrapper .swiper-slide{
+    width: 100%;height: 100%;position: relative;
+}
+.music-box{
+    position: absolute;width: 0.5rem;height: 0.5rem;
+    top:0.4rem; right: 0.4rem;border-radius: 50%;overflow: hidden;
+    background-image: url("../imgs/play.png");background-repeat: no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;z-index: 30;box-shadow: 0 0 10px #ccc;
+}
+.music-box video{
+    width: 100%;height: 100%;opacity: 0;
+}
+.music-box img{
+    position: absolute;left:0;right: 0;bottom: 0;top:0;margin: auto;
+    width: 0.3rem;height: 0.3rem;
+}
+.music-playing{
+    animation: playing 3s linear forwards infinite;
+    animation-play-state: running;
+}
+.music-pause{
+    animation-play-state: paused;
+}
+@keyframes playing {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.page-01{
+    background-image: url("../imgs/back07.jpg");background-repeat: no-repeat;
+    background-size: 100% auto;background-position: center top;
+}
+.page-01 .logo{
+    background-image: url("../imgs/logo.gif");background-repeat: no-repeat;
+    background-size: 100% auto;background-position: center center;
+    width: 2.5rem;height: 0.6rem;position: absolute;left: 0;right: 0;
+    top: 0;bottom: 0;margin: auto;
+}
+.page-01 .name{
+    width: 2.5rem;height: 2.4rem;position: absolute;left: 0;right: 0;
+    top: 0;bottom: 0;margin: auto;font-size: 0.4rem;text-align: center;
+    color: red;box-sizing: border-box;padding-top: 1.2rem;letter-spacing: 0.1rem;
+    line-height: 0.6rem;
+}
+.page-01 .name span{
+    font-size: 0.3rem;letter-spacing: 0.05rem;
+}
+.page-01 .bottom-box{
+    background-image: url("../imgs/back08.jpg");background-repeat: no-repeat;
+    background-size: 100% auto;background-position: center bottom;
+    width: 100%;height: 2rem;position: absolute;bottom: 0;left: 0;
+}
+
+.page-02{
+    background-image: url("../imgs/back02_02.jpg");background-repeat: no-repeat;
+    background-size: cover;background-position: center center;box-sizing: border-box;
+    padding-top: 1.6rem;
+}
+.title{
+    font-size: 0.3rem;color: #333333;text-align: center;
+}
+.page-02 ul{
+    width: 100%;margin-top: 0.3rem;
+    box-sizing: border-box;text-align: center;line-height: 0.4rem;
+}
+
+.page-03{
+    background-image: url("../imgs/back03.jpg");background-repeat: no-repeat;
+    background-size: 100% auto;background-position: center -80px;box-sizing: border-box;
+    padding-top: 1rem;
+}
+.page-03 .bottom-box{
+    background-image: url("../imgs/back04.jpg");background-repeat: no-repeat;
+    background-size: 100% auto;background-position: center bottom;
+    width: 100%;height: 2rem;position: absolute;bottom: 0;left: 0;
+}
+.page-03 .about-us{
+    text-align: center;font-size: 0.3rem;color: #333333;
+}
+p{
+    text-align: justify;font-size: 0.15rem;color: #0F3A56;
+    box-sizing: border-box;padding: 0 0.2rem;line-height: 0.25rem;margin-top: 0.2rem;
+    position: relative;
+    z-index: 40;
+}
+
+.down{
+    position: absolute;
+    bottom: 1rem;
+    width: 0.5rem;height: 0.5rem;
+    background-image: url("../imgs/down01.png");background-repeat: no-repeat;
+    background-size: 100% 100%;background-position: center center;
+    left: 0;right: 0;margin: auto;
+    animation: downing 2s ease-in-out forwards infinite;
+}
+@keyframes downing {
+    0%{
+        bottom: 1rem;
+    }
+    50%{
+        bottom: 0.8rem;
+    }
+    100%{
+        bottom: 1rem;
+    }
+}
+
+.down02{
+    position: absolute;
+    bottom: 0.5rem;
+    width: 0.5rem;height: 0.5rem;
+    background-image: url("../imgs/down01.png");background-repeat: no-repeat;
+    background-size: 100% 100%;background-position: center center;
+    left: 0;right: 0;margin: auto;
+    animation: downing02 2s ease-in-out forwards infinite;
+}
+@keyframes downing02 {
+    0%{
+        bottom: 0.5rem;
+    }
+    50%{
+        bottom: 0.3rem;
+    }
+    100%{
+        bottom: 0.5rem;
+    }
+}

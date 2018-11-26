@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue计算属性</title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<p>a={{a}},b={{b}},c={{c}}</p>
+		</div>
+		
+		<div id="app2">
+			firstName={{firstName}},lastName={{lastName}},fullName={{fullName}}
+			<br />
+			<br />
+			<input @keyup.enter='changeName' v-model='newName'/>
+		</div>
+		
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					a:1,
+					c:''
+				},
+				computed:{
+					 // 一个计算属性的 getter
+					b:function(){
+						// `this` 指向 vm 实例
+						return this.a+1
+					}
+				}
+			});
+			
+			//计算属性 方法2：$watch
+			/*vm.$watch('a',function(val){
+				this.c = val+2;
+			});*/
+			
+			
+			var vm2 = new Vue({
+				el:"#app2",
+				data:{
+					firstName:'tom',
+					lastName:'jone',
+					newName:''
+				},
+				computed:{
+					fullName:{
+						// getter
+						get:function(){
+							return this.firstName+' '+this.lastName;
+						},
+						 // setter   vm.fullName = 'John Doe' 时，setter 会被调用，vm.firstName 和 vm.lastName 也会有相应更新
+						set:function(newName){
+							var nameArr = newName.split(' ');
+							this.firstName = nameArr[0];
+							this.lastName = nameArr[nameArr.length-1];
+						}
+					}
+				},
+				methods:{
+					changeName:function(){
+						this.fullName = this.newName;
+						this.newName='';
+					}
+				}
+			});
+			
+		</script>
+	</body>
+</html>

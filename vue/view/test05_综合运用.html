@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue-综合运用</title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<input v-model='newMsg' v-on:keyup.enter='addNewMsg'/>
+			<ul>
+				<li v-for='todo in todos'>
+					<span>{{todo.text}}</span>
+					<button v-on:click='removeMsg($index)'>×</button>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el:"#app",
+				data:{
+					newMsg:'',
+					todos:[{text:'第一条数据'}]
+				},
+				methods:{
+					addNewMsg:function(){
+						var newMsg = this.newMsg.trim();
+						if(newMsg){
+							this.todos.push({text:newMsg});
+							this.newMsg = '';
+						}
+						
+					},
+					removeMsg:function(index){
+						this.todos.splice(index,1);
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

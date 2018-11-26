@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--http://perfectlife.iteye.com/blog/396959-->
+		<!--
+			在ie9以下，js操作提交表单，都是没用的，唉
+		-->
+		<form class="iframeForm" action="${pageContext.request.contextPath}/driver/addImg2/" id="idCardf_form" name="idCardf_form" enctype="multipart/form-data" method="post" target="idCardf_frame" style="width:350px">
+			<input type="file" name="uploadImg" style="float:left;width:234px;font-size:15px" />
+			<input type="hidden" name="imgType" value="idCardf" />
+			<input type="submit" value='上传图片' style="float:left;height:24px;padding:0px;margin:0px 0 0 7px;line-height:0px;font-size:13px;" />
+			<iframe name="idCardf_frame" id="idCardf_frame" style="display:none"></iframe>
+		</form>
+		<script type="text/javascript">
+		
+			/** 
+			 * iframe上传外观图片的返回操作 
+			 *  
+			 * msg 返回的图片所在地址 
+			 * imgType  图片类型
+			 */
+			function iframeCallback(msg, imgType) {
+				alert(msg+","+imgType);
+			}
+		</script>
+		
+		
+		<!--以下是后台代码-->
+		<!--
+		@ResponseBody
+	    @RequestMapping(value = "/addImg2", method = RequestMethod.POST)
+		public ResponseBase addImg2(@RequestParam String imgType,@RequestParam MultipartFile uploadImg,HttpServletResponse response) throws IOException {
+			final ResponseBase responseBase = new ResponseBase();
+			String suffix = uploadImg.getOriginalFilename().toString();//.substring(idCardf.getOriginalFilename().toString().lastIndexOf("."));
+			String key = "funpic/template/"+suffix;
+		   	try {
+		           	//删除身份照照片 
+		           	 //ossService.deleteFile(key);
+		            // 上传新头像
+		            //ossService.uploadFile(key, new ByteArrayInputStream(idCardf.getBytes()));
+		   		
+		   		File tmpFile = File.createTempFile(suffix, ".tmp");
+		   		
+		   		ossService.uploadFile(key,uploadImg.getBytes());
+		    } catch (Exception e) {
+	            logger.error("头像上传失败！" + e);
+	            return ResponseBase.buildErrorResponse("头像上传失败！");
+		    }
+		   	
+		   	
+		    //返回结果    主要是这个
+		   	PrintWriter out = response.getWriter();  
+	        out.println("<script type='text/javascript'>parent.iframeCallback('" + key+ "','"+imgType+"')</script>");  
+	        out.flush();
+	        out.close();
+		   	
+			return null;
+		}
+		-->
+		
+	</body>
+
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>表格树</title>
+		<script src="jquery-2.1.4.min.js"></script>
+		<script src="data.js"></script>
+		<style>
+			.container{
+				width: 1100px;
+				min-height: 500px;
+				margin: 50px auto;
+			}
+			.item-box-main{
+				display: table;
+				vertical-align: middle;
+				font-size: 0px;
+				outline: 1px solid #eee;
+			}
+			.item-box-02{
+				display: table;
+				vertical-align: top;
+				font-size: 0px;
+			}
+			.item-text{
+				display: table-cell;
+				width: 150px;
+				vertical-align: middle;
+				text-align: center;
+				font-size: 0px;
+				outline: 1px solid #eee;
+				padding: 0px 4px;
+				padding: 10px;
+			}
+			.item-text span{
+				display: inline-block;
+			}
+			.item-box-02 .item{
+				display: block;
+				vertical-align: middle;
+				font-size: 0px;
+				outline: 1px solid #eee;
+				padding: 4px;
+				width: 100px;
+				text-align: center;
+			} 
+			.item-box-02 .item-box{
+				display: table;
+				vertical-align: middle;
+				outline: 1px solid #eee;
+				width: 100%;
+			} 
+			span{
+				font-size: 14px!important;
+			}
+		</style>
+	</head>
+	<body>
+		<!--demo-->
+		<div class="container">
+			<div class="item-box-main">
+				<div class="item-text"><span>main</span></div>
+				<div class="item-box-02">
+					<div class="item-box">
+						<div class="item-text"><span>1</span></div>
+						<div class="item-box-02">
+							<div class="item"><span>不好好</span></div>
+							<div class="item"><span>不好好</span></div>
+							<div class="item"><span>不好好</span></div>
+						</div>
+					</div>
+					<div class="item-box">
+						<div class="item-text"><span>2</span></div>
+						<div class="item-box-02">
+							<div class="item"><span>不好好</span></div>
+							<div class="item"><span>不好好</span></div>
+							<div class="item"><span>不好好</span></div>
+						</div>
+					</div>
+					<div class="item-box">
+						<div class="item-text"><span>3</span></div>
+						<div class="item-box-02">
+							<div class="item"><span>不好好</span></div>
+							<div class="item"><span>不好好</span></div>
+							<div class="item-box">
+								<div class="item-text"><span>4</span></div>
+								<div class="item-box-02">
+									<div class="item-box">
+										<div class="item-text"><span>5</span></div>
+										<div class="item-box-02">
+											<div class="item"><span>不好好</span></div>
+											<div class="item"><span>不好好</span></div>
+											<div class="item"><span>不好好</span></div>
+										</div>
+									</div>
+									<div class="item"><span>不好好</span></div>
+									<div class="item"><span>不好好</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="item"><span>8</span></div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="container">
+			<div class="item-box-main" id="itemBox"></div>
+		</div>
+		
+		<script type="text/javascript">
+			$(function(){
+				var $_item = $('<div class="item"><span></span></div>');
+				var $_item_box = $('<div class="item-box"></div>');
+				var $_item_box_02 = $('<div class="item-box-02"></div>');
+				var $_item_text = $('<div class="item-text"><span></span></div>');
+				
+				
+				var data = dataSource.data;
+				
+				var $_item_text_clone_main = $_item_text.clone();
+				$_item_text_clone_main.find("span").text(data.deptShortName);
+				$("#itemBox").append($_item_text_clone_main);
+				
+				var $_item_box_02_clone_main = $_item_box_02.clone();
+				$("#itemBox").append($_item_box_02_clone_main);
+				
+				
+				appendNodes($_item_box_02_clone_main,data.nodes,data.level);
+				function appendNodes($_parentDiv,nodesArr,level){
+					
+					nodesArr.forEach(function(oneNode,index){
+						
+						if(oneNode.level-level==1){
+							
+							var $_item_box_clone = $_item_box.clone();
+						
+							var $_item_text_clone = $_item_text.clone();
+							$_item_text_clone.find("span").text(oneNode.deptShortName);
+							$_item_box_clone.append($_item_text_clone);
+							
+							var $_item_box_02_clone = $_item_box_02.clone();
+							$_item_box_clone.append($_item_box_02_clone);
+							
+							$_parentDiv.append($_item_box_clone);
+							
+							
+							if(oneNode.nodes && oneNode.nodes.length>0){
+								appendNodes($_item_box_02_clone,oneNode.nodes,oneNode.level);
+							}
+						}else if(oneNode.level-level>=2){
+							var n = oneNode.level-level-1;
+							
+							var $_next_parentDiv = $_parentDiv;
+							
+							for(var c = 0;c<n;c++){
+								var $_item_box_clone = $_item_box.clone();
+						
+								var $_item_text_clone = $_item_text.clone();
+								$_item_text_clone.find("span").text("");
+								$_item_box_clone.append($_item_text_clone);
+								
+								var $_item_box_02_clone = $_item_box_02.clone();
+								$_item_box_clone.append($_item_box_02_clone);
+								
+								$_next_parentDiv.append($_item_box_clone);
+								
+								$_next_parentDiv = $_item_box_02_clone;
+							}
+							
+							
+							var $_item_box_clone = $_item_box.clone();
+						
+							var $_item_text_clone = $_item_text.clone();
+							$_item_text_clone.find("span").text(oneNode.deptShortName);
+							$_item_box_clone.append($_item_text_clone);
+							
+							var $_item_box_02_clone = $_item_box_02.clone();
+							$_item_box_clone.append($_item_box_02_clone);
+							
+							$_next_parentDiv.append($_item_box_clone);
+							
+							
+							if(oneNode.nodes && oneNode.nodes.length>0){
+								appendNodes($_item_box_02_clone,oneNode.nodes,oneNode.level);
+							}
+							
+							
+						}
+						
+						
+						
+						
+						
+					});
+					
+					
+				}
+				
+				
+				function format(){
+					$(".item-text").each(function(index,itemText){
+						var h = $(itemText).parent().height();
+						$(itemText).height(h).css("padding-top",h/3+"px");;
+					});
+				}
+				
+			});
+		</script>
+		
+		
+	</body>
+</html>

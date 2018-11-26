@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>双向绑定</title>
+		<script src="../js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<p>日利率：{{day}}</p>
+			<input v-model='middleData' v-on:keyup = "changeDay"/>
+			<p>月利率：{{month}}</p>
+			<input v-model='middleData' v-on:keyup = "changeMonth"/>
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el:"#app",
+				data:{
+					day:0.12,
+					month:0.144,
+					middleData:0,
+					
+				},
+				methods:{
+					multiply:function(arg1, arg2){
+						var m = 0,
+							s1 = arg1.toString(),
+							s2 = arg2.toString();
+						try {
+							m += s1.split(".")[1].length;
+						} catch(e) {}
+						try {
+							m += s2.split(".")[1].length;
+						} catch(e) {}
+						return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
+					},
+					divided:function (arg1, arg2) {
+						var t1 = 0,
+							t2 = 0,
+							r1, r2;
+						try {
+							t1 = arg1.toString().split(".")[1].length;
+						} catch(e) {}
+						try {
+							t2 = arg2.toString().split(".")[1].length;
+						} catch(e) {}
+						with(Math) {
+							r1 = Number(arg1.toString().replace(".", ""));
+							r2 = Number(arg2.toString().replace(".", ""));
+							return(r1 / r2) * pow(10, t2 - t1);
+						}
+					},
+					changeDay:function(){
+						this.day = this.middleData;
+						this.month = this.multiply(this.middleData,1.2)
+					},
+					changeMonth:function(){
+						this.month = this.middleData;
+						this.day = this.divided(this.middleData,1.2)
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>过渡</title>
+		<script src="../js/vue-2.3.0.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			.fade-enter{
+				display: inline-block;
+				opacity: 0;
+				transform: scale(0.2);
+			}
+			.fade-enter-active{
+				transition: all .5s;
+				display: inline-block;
+			}
+			.fade-leave-active {
+				transition: all .5s;
+				display: inline-block;
+				opacity: 0;
+				transform: scale(0.2);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="demo">
+			<button v-on:click="show = !show">Toggle</button><br />
+			<transition name="fade">
+				<p v-if="show">hello</p>
+			</transition>
+		</div>
+
+		<script>
+			new Vue({
+				el: "#demo",
+				data: {
+					show: true
+				}
+			});
+		</script>
+
+	</body>
+
+</html>

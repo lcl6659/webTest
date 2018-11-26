@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>条件渲染</title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h1 v-if="ok">1、v-if条件判断</h1>
+			<h1 v-else>v-else</h1>
+			
+			<template v-if='ok'>
+				<h2>2、切换多个元素呢 -》template v-if='ok'</h2>
+				<p>爱一旦结冰一切都好平静 泪水它一旦流尽只剩决心 放逐自己在黑夜的边境 任由黎明一步一步向我逼近 想你的心化成灰烬</p>
+			</template>
+			
+			
+			<h1 v-show='ok'>3、v-show 的元素会始终渲染并保持在 DOM 中。v-show 是简单的切换元素的 CSS 属性 display</h1>
+			
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					ok:true
+					
+				}
+			});
+		</script>
+	</body>
+</html>

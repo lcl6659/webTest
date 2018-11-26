@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>GBin1 HTML5 Sortable Demo</title>
+
+		<!-- Used by example page -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<!-- Used /by example page -->
+
+	</head>
+
+	<body>
+		<section id="intro">
+			<h1>官网：<a href="http://rubaxa.github.io/Sortable/" target="_blank">http://rubaxa.github.io/Sortable/</a></h1>
+			<h1>github：<a href="https://github.com/RubaXa/Sortable" target="_blank">https://github.com/RubaXa/Sortable</a></h1>
+		</section>
+
+		<section>
+			<ul class="gbin1-list" id="items">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+				<li>8</li>
+			</ul>
+
+			<div style="clear:both" id="msg"></div>
+		</section>
+
+		<!-- Dependencies -->
+		<script type="text/javascript" src="js/Sortable.min.js"></script>
+
+		<script>
+			var el = document.getElementById('items');
+			var sortable = new Sortable(el, {
+				animation:150,//animation speed moving items when sorting, `0` — without animation
+				ghostClass: "sortable-ghost", // Class name for the drop placeholder
+				chosenClass: "sortable-chosen", // Class name for the chosen item
+				dragClass: "sortable-drag", // Class name for the dragging item
+				onEnd: function (/**Event*/evt) {
+			    	console.log("排序结束");    
+			    }
+			});
+		</script>
+	</body>
+
+</html>

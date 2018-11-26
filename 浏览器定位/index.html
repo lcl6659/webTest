@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+		<title>浏览器定位</title>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.3&key=11bf9ad5969f3d2b6dc2ecbe1f42e273"></script>
+		<body>
+			<script type="text/javascript">
+				mapObj = new AMap.Map('iCenter');
+				mapObj.plugin('AMap.Geolocation', function () {
+				    geolocation = new AMap.Geolocation({
+				        enableHighAccuracy: true,//是否使用高精度定位，默认:true
+				        timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+				        extensions:'base',
+				    });
+				    mapObj.addControl(geolocation);
+				    geolocation.getCurrentPosition();
+				    AMap.event.addListener(geolocation, 'complete', function(data){//返回定位信息
+				    	var lat = Number(data.position.lat);
+				    	var lng = Number(data.position.lng);
+				    	console.log(JSON.stringify(data))
+				    });
+				    AMap.event.addListener(geolocation, 'error', function(){//返回定位出错信息
+				    	
+				    });      
+				});
+			</script>
+		</body>
+</html>

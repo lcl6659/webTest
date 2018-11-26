@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue组件</title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<my-component></my-component>
+		</div>
+		<script type="text/javascript">
+			/*
+			 * 组件3步骤 定义、注册、使用
+			 */
+			
+			
+			//定义组件
+			var myComponent = Vue.extend({
+				template:'<div>这是一个组件</div>'
+			});
+			
+			
+			//注册
+			Vue.component('my-component',myComponent);
+			
+			//使用
+			var vm = new Vue({
+				el:"#app"
+			});
+			
+		</script>
+	</body>
+</html>

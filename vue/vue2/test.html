@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>测试</title>
+		<script src="../js/vue-2.3.0.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<div id="demo">
+			<select :name="key" class="form-control" v-model="wyj">
+                <option value="">请选择</option>
+                <option v-for="feeItem in options" :value="feeItem">{{feeItem.rate}}</option>
+            </select>
+		</div>
+		<script>
+			new Vue({
+				el: "#demo",
+				data: {
+					options: [{
+						"rate": "5.00",
+						"wyGt": "6",
+						"wylFeeLess": "3.0"
+					}, {
+						"rate": "0.00",
+						"wyGt": "6",
+						"wylFeeLess": "0.0"
+					}],
+					wyj:{
+						"rate": "0.00",
+						"wyGt": "6",
+						"wylFeeLess": "0.0"
+					}
+				},
+				methods: {
+
+				}
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="x-UA-Compatible" content="Edge">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Preview by fsjohnhuang</title>
+		<style type="text/css">
+			.preview {
+				width: 100px;
+				height: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input type="file" id="icon1"/>&nbsp;<button onclick="pv1.reset()">重置</button>
+		<div class="preview" id="pv1">
+		</div>
+		<input type="file" id="icon2"/>&nbsp;<button onclick="pv2.reset()">重置</button>
+		<div class="preview" id="pv2">
+		</div>
+		<script type="text/javascript">
+			var $ = function(id) {
+				return document.getElementById(id.substring(1));
+			};
+		</script>
+		<script type="text/javascript" src="../js/preview.js"></script>
+		<script type="text/javascript">
+			var get = function(id) {
+				return document.getElementById(id);
+			};
+			Preview.defaults.onlegal = true;
+			Preview.defaults.onillegal = false;
+			var pv1 = new Preview(get('icon1'), get('pv1'), {
+				onlegal: function(path, ext, accept) {
+					alert(this === pv1);
+					alert('path:' + path);
+					alert('extension:' + ext);
+					alert('accept:' + accept);
+
+					return true;
+				},
+				onillegal: false
+			});
+			var pv2 = Preview(get('pv2'), get('icon2'));
+		</script>
+	</body>
+
+</html>

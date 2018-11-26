@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>获取上传图片的base64</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="baidu-site-verification" content="d5qOMB2cgK">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<link rel="stylesheet" type="text/css" href="webupload/webuploader.css"/>
+		<script src="jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="webupload/webuploader.js" type="text/javascript" charset="utf-8"></script>
+		
+		<style type="text/css">
+			.img-box{
+				width: 300px;
+				height: 300px;
+				border: 5px solid #fff;
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: contain;
+				float: left;
+				margin-right: 20px;
+				margin-top: 20px;
+				outline: 1px solid #666666;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		<div id="filePicker">选择图片</div>
+		
+		<script type="text/javascript">
+			$(function(){
+				
+				initWebUploader();
+				
+				//初始化图片上传预览
+				function initWebUploader() {
+					uploader = WebUploader.create({
+			
+						// 选完文件后，是否自动上传。
+						auto: false,
+			
+						// swf文件路径
+						//注意;这里要使用全路径
+						swf: 'webupload/Uploader.swf',
+			
+						// 文件接收服务端。
+						server: '',
+			
+						// 选择文件的按钮。可选。
+						// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+						pick: '#filePicker',
+						
+						fileNumLimit:10,//验证文件总数量, 超出则不允许加入队列。
+						
+						fileSingleSizeLimit:5120000,//验证单个文件大小是否超出限制
+			
+						// 只允许选择图片文件。
+						accept: {
+							title: 'Images',
+							extensions: 'jpg,jpeg,bmp,png',
+							mimeTypes: 'image/jpg,image/jpeg,image/bmp,image/png'
+						}
+					});
+					
+					uploader.option( 'thumb', {
+					    type: "jpg"
+					})
+			
+					// 当有文件添加进来的时候
+					uploader.on('fileQueued', function(file) {
+						// 创建缩略图
+						//console.log(file.size);
+						
+						uploader.makeThumb(file, function(error, src) {
+							//src  图片的base64
+							var $oneupload = $('<div class="img-box" style=""></div>');
+							$oneupload.css("background-image","url("+src+")");
+							$("body").append($oneupload);
+						},1,1);
+					});
+			
+				}
+			});
+		</script>
+	</body>
+
+</html>

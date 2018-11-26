@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>获取file上传视频参数-时长等 -ie9不支持</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="baidu-site-verification" content="d5qOMB2cgK">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<script src="jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div>获取file上传视频参数-时长等 -ie9不支持</div><br />
+		<input type="file" onchange="upload(this)" accept="video/*" capture="camera"/>
+
+		<span id="duration" style="margin-top: 100px;">时长：</span>
+		<span id="date" style="margin-top: 100px;">时间：</span>
+		<span id="size" style="margin-top: 100px;">size：</span>
+
+		<img id="tempimg" dynsrc="" src="" style="display:none" />
+
+		<script type="text/javascript">
+			function upload(e) {
+				console.log(e.files[0]);
+				
+				
+				var date = new Date(e.files[0].lastModifiedDate);
+				
+				$("#date").text("更新时间："+date);
+				$("#size").text("size："+e.files[0].size);
+				
+
+				if($("#video-up").length > 0) {
+					$("#video-up").remove();
+				}
+
+				var $_video = $('<video src="" controls="" id="video-up" width="0px" height="0px" autoplay="autoplay"></video>');
+
+				$("body").append($_video);
+
+				var video = document.getElementById("video-up");
+
+				if(e.files && e.files[0]) {
+					if(e.files[0].type != "video/mp4") {
+						alert("只能上传mp4");
+						return;
+					}
+					video.src = window.URL.createObjectURL(e.files[0]); //此方法ie9不支持
+				} else {
+					alert("换个浏览器吧");
+					return;
+				}
+
+				video.muted = true;
+
+				getVideoDuration(video, function(duration) {
+					console.log(duration);
+					$("#duration").text("时长:" + duration + "s");
+				});
+			}
+
+			//获取时长
+			function getVideoDuration(video, cb) {
+				//监听播放
+				var eventTester = function(e) {
+					video.addEventListener(e, function() {
+						cb && cb(video.duration);
+						video.pause();
+					}, false);
+				}
+				eventTester("play");
+			}
+		</script>
+	</body>
+
+</html>
