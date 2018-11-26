@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-20、颜色选择器.html-api</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+			}
+			
+			.canvas-box {
+				width: 1400px;
+				height: 900px;
+				margin: auto;
+			}
+			
+			.canvas-box canvas {
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+			
+			button {
+				padding: 10px 20px;
+			}
+			.color{
+				width: 200px;
+				height: 50px;
+				text-align: center;
+				line-height: 50px;
+				font-size: 16px;
+				border: 1px solid #000;
+				text-shadow: 0 0 3px #fff;
+				font-weight: 700;
+			}
+		</style>
+	</head>
+
+	<body onload="init()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+		<div class="color" id="color"></div>
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth; //初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+			var raf;//requestAnimationFrame句柄
+			
+			function init() {
+				var img = new Image();
+				img.src = './source/timg.jpg';
+				img.onload = function(){
+					ctx.drawImage(img,0,0);
+				}
+			}
+			var colorDoc = document.getElementById("color");
+			canvas.addEventListener('mousemove',pick);
+			function pick(event){
+				var x = event.layerX;
+				var y = event.layerY;
+				
+				var colorImageData = ctx.getImageData(x,y,1,1);
+				var colorData  = colorImageData.data;
+				var rgba = 'rgba('+colorData[0]+','+colorData[1]+','+colorData[2]+','+colorData[3]/255+')';
+				
+				colorDoc.style.backgroundColor = rgba;
+				colorDoc.textContent = rgba;
+				
+			}
+			
+		</script>
+	</body>
+
+</html>

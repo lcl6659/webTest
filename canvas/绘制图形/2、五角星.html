@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas绘制五角星</title>
+		<style type="text/css">
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			#canvasbox {
+				width: 100%;
+			}
+			
+			#canvasbody {
+				width: 1190px;
+				margin: 0px auto;
+			}
+			
+			#canvas {
+				background-color: #E6E6E6;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="canvasbox">
+			<div id="canvasbody">
+				<canvas id="canvas" width="1190px" height="800px"></canvas>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext('2d');
+			
+			window.requestAnimationFrame(animateStar);
+			var n = 0;
+			function animateStar(){
+				ctx.clearRect(0,0,1190,800);
+				ctx.save();
+				ctx.translate(200*n,100*n);
+				n = n+0.01;
+				drawStar(ctx,100*n,Math.PI*n);
+				ctx.restore();
+				if(n<2){
+					window.requestAnimationFrame(animateStar);
+				}
+			}
+			
+			/*
+			 * r：半径
+			 * angle：五角星旋转角度（选填，默认为0）
+			 */
+			function drawStar(ctx, r,angle) {
+				ctx.save();
+				ctx.rotate(-Math.PI / 10);
+				if(angle){
+					ctx.rotate(angle);
+				}
+				ctx.beginPath()
+				ctx.moveTo(r, 0);
+				for(var i = 0; i < 9; i++) {
+					ctx.rotate(Math.PI / 5);
+					if(i % 2 == 0) {
+						ctx.lineTo((r / 0.525731) * 0.200811, 0);
+					} else {
+						ctx.lineTo(r, 0);
+					}
+				}
+				ctx.closePath();
+				ctx.fill();
+				ctx.restore();
+			}
+			
+		</script>
+	</body>
+
+</html>

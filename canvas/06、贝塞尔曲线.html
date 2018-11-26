@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-arcTo-api</title>
+		<style type="text/css">
+			*{
+				margin: 0;padding: 0;
+			}
+			html,body{
+				width: 100%;
+			}
+			.canvas-box{
+				width: 1000px;
+				height: 700px;
+				margin: auto;
+			}
+			.canvas-box canvas{
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+		</style>
+	</head>
+	<body onload="draw()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+		
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth;//初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			function draw(){
+				var ctx = canvas.getContext('2d');
+				
+				ctx.beginPath();
+				ctx.moveTo(300,300);
+				ctx.quadraticCurveTo(350,200,400,300);
+				ctx.stroke();
+				
+				ctx.beginPath();
+				ctx.moveTo(300,500);
+				ctx.bezierCurveTo(400,400,500,350,500,500)
+				ctx.stroke();
+			}
+		</script>
+	</body>
+</html>

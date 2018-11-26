@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-15、canvas变形-api</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+			}
+			
+			.canvas-box {
+				width: 1400px;
+				height: 900px;
+				margin: auto;
+			}
+			
+			.canvas-box canvas {
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+			
+			button {
+				padding: 10px 20px;
+			}
+		</style>
+	</head>
+
+	<body onload="draw()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth; //初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+
+			function draw() {
+				ctx.fillStyle = 'rgba(0,0,0,0.1)';
+				ctx.fillRect(0, 0, canvasBox.clientWidth, canvasBox.clientHeight);
+				
+				
+				/*ctx.translate(50,50);
+				ctx.fillStyle = '#6666FF'
+				ctx.fillRect(0,0,50,50);
+				
+				ctx.translate(50,50);
+				ctx.fillStyle = '#009933'
+				ctx.fillRect(0,0,50,50);
+				
+				ctx.translate(50,50);
+				ctx.fillStyle = '#009999'
+				ctx.fillRect(0,0,50,50);*/
+				
+				
+				/*ctx.fillStyle = '#009933'
+				ctx.rotate(Math.PI*0.1);
+				ctx.fillRect(0,0,200,200);
+				
+				ctx.fillStyle = '#009999'
+				ctx.rotate(Math.PI*0.1);
+				ctx.fillRect(0,0,200,200);*/
+				
+				/*ctx.fillStyle = '#333366'
+				ctx.rotate(Math.PI*0.1);
+				ctx.fillRect(0,0,200,200);
+				
+				ctx.fillStyle = '#9900FF'
+				ctx.rotate(Math.PI*0.1);
+				ctx.fillRect(0,0,200,200);
+				
+				ctx.fillStyle = '#CCCC00'
+				ctx.rotate(Math.PI*0.1);
+				ctx.fillRect(0,0,200,200);*/
+				
+				/*ctx.translate(50,50);
+				
+				ctx.fillStyle = '#6666FF';
+				ctx.fillRect(0,0,200,200);
+				
+				ctx.fillStyle = '#333366';
+				ctx.scale(0.5,0.5);
+				ctx.fillRect(0,0,200,200);
+				
+				ctx.fillStyle = '#9900FF';
+				ctx.scale(0.5,0.5);
+				ctx.fillRect(0,0,200,200);*/
+				
+				
+				ctx.translate(100,100);
+				ctx.fillStyle = '#6666FF';
+				ctx.fillRect(0,0,100,100);
+				ctx.save();
+				
+				ctx.translate(150,0);
+				ctx.transform(1,0.5,0,1,0,0);
+				ctx.fillRect(0,0,100,100);
+				ctx.restore();
+				
+				ctx.translate(300,0);
+				ctx.transform(1,0,0.5,1,0,0);
+				ctx.fillRect(0,0,100,100);
+				
+
+			}
+		</script>
+	</body>
+
+</html>

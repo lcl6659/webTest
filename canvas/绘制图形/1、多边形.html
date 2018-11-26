@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>canvas绘制多边形方法</title>
+        <style type="text/css">
+            *{
+                margin: 0px;
+                padding: 0px;
+            }
+            #canvasbox{
+                width: 100%;
+            }
+            #canvasbody{
+                width: 1190px;
+                margin: 0px auto;
+            }
+            #canvas{
+                background-color: #E6E6E6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="canvasbox">
+            <div id="canvasbody">
+                <canvas id="canvas" width="1190px" height="800px"></canvas>
+            </div>
+        </div>
+        <script type="text/javascript">
+        	/*
+        	 *	x,y中心位置坐标
+        	 * 	r:半径
+        	 * 	n：边数
+        	 * 	startAngle：起始角度
+        	 * 	lineWidth：线宽
+        	 */
+            function drawPolygon(context,x,y,r,n,startAngle,lineWidth){
+            	context.save();
+                context.beginPath();
+                //每次增加的角度
+                var angleStep = 2*Math.PI/n;
+                
+                //设置起点
+                startAngle = startAngle || 0;
+                var startX = x+r*Math.sin(startAngle);
+                var startY = y-r*Math.cos(startAngle);
+                context.moveTo(startX,startY);
+                console.log("x:"+startX+',y:'+startY);
+                //绘制2——>n-1条线
+                for(var i=1;i<n;i++){
+                    var angleAfter = startAngle+angleStep*i;
+                    var toX = x+r*Math.sin(angleAfter);
+                    var toY = y-r*Math.cos(angleAfter);
+                    console.log("x:"+toX+',y:'+toX);
+                    context.lineTo(toX,toY);
+                }
+                
+                //闭合
+                context.closePath();
+                context.strokeStyle = '#f00';//边框颜色
+                context.lineWidth = lineWidth;//线的宽度
+                context.stroke();
+                content.restore();
+            }
+            
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext('2d');
+            
+            drawPolygon(context,200,150,100,9,0,2);
+            
+        </script>
+    </body>
+</html>

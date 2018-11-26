@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-22、反锯齿：放大图片-api</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			html,
+			body {
+				width: 100%;
+			}
+			.canvas-box {
+				width: 1400px;
+				height: 900px;
+				margin: auto;
+			}
+			
+			.canvas-box canvas {
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+			
+			button {
+				padding: 10px 20px;
+			}
+			.color{
+				width: 200px;
+				height: 50px;
+				text-align: center;
+				line-height: 50px;
+				font-size: 16px;
+				border: 1px solid #000;
+				text-shadow: 0 0 3px #fff;
+				font-weight: 700;
+			}
+		</style>
+	</head>
+
+	<body onload="init()">
+		<div><input type="checkbox" id="smothSwitch"/>开启反锯齿</div>
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+		
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth; //初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+			var raf;//requestAnimationFrame句柄
+			var imgWidth,imgHeight;
+			
+			function init() {
+				var img = new Image();
+				img.src = './source/timg (3).jpg';
+				img.onload = function(){
+					imgWidth = img.width;
+					imgHeight = img.height;
+					ctx.drawImage(img,0,0);
+				}
+			}
+			
+			var smothSwitch = document.getElementById('smothSwitch');
+			smothSwitch.addEventListener('click',function(){
+				ctx.imageSmoothingEnabled = this.checked;
+				ctx.webkitImageSmoothingEnabled = this.checked;
+				ctx.mozImageSmoothingEnabled = this.checked;
+				ctx.msImageSmoothingEnabled = this.checked;
+			});
+			
+			canvas.addEventListener('mousemove',function(e){
+				var x = e.layerX-50>0?e.layerX-50:0;
+				var y = e.layerY-50>0?e.layerY-50:0;
+				
+				ctx.clearRect(imgWidth,0,400,400);
+				ctx.drawImage(canvas,x,y,100,100,imgWidth,0,400,400);
+				
+			});
+			
+			
+		</script>
+	</body>
+
+</html>

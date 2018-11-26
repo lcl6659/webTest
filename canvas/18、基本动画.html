@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-18、基本动画-api</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+			}
+			
+			.canvas-box {
+				width: 1400px;
+				height: 900px;
+				margin: auto;
+			}
+			
+			.canvas-box canvas {
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+			
+			button {
+				padding: 10px 20px;
+			}
+		</style>
+	</head>
+
+	<body onload="init()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth; //初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+			var n = 0;
+			var w = 100;
+			
+			function init() {
+				window.requestAnimationFrame(circleIn);
+			}
+			
+			function circleIn(){
+				ctx.clearRect(0,0,canvas.width,canvas.height);
+				ctx.save();
+				ctx.translate(100,100);
+				n = n+0.05;
+				ctx.beginPath();
+				ctx.moveTo(100,100);
+				ctx.arc(100,100,100,0,Math.PI*n);
+				ctx.fill();
+				if(n<2){
+					window.requestAnimationFrame(circleIn);
+				}else{
+					window.requestAnimationFrame(translate);
+				}
+				ctx.restore();
+			}
+			
+			
+			function translate(){
+				ctx.save();
+				ctx.clearRect(0,0,canvas.width,canvas.height);
+				w = w+4;
+				ctx.translate(w,100);
+				ctx.beginPath();
+				ctx.moveTo(100,100);
+				ctx.arc(100,100,100,0,Math.PI*2);
+				ctx.fill();
+				if(w<1100){
+					window.requestAnimationFrame(translate)
+				}else{
+					window.requestAnimationFrame(circleOut)
+				}
+				ctx.restore();
+			}
+			
+			function circleOut(){
+				ctx.save();
+				ctx.clearRect(0,0,canvas.width,canvas.height);
+				ctx.translate(w,100);
+				n = n-0.05;
+				console.log(n);
+				if(n<0.01){
+					n = 0;
+				}
+				ctx.beginPath();
+				ctx.moveTo(100,100);
+				ctx.arc(100,100,100,0,Math.PI*n);
+				ctx.fill();
+				if(n>0){
+					window.requestAnimationFrame(circleOut);
+				}
+				ctx.restore();
+			}
+			
+			
+		</script>
+	</body>
+
+</html>

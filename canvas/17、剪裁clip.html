@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-17、剪裁clip-api</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+			}
+			
+			.canvas-box {
+				width: 1400px;
+				height: 900px;
+				margin: auto;
+			}
+			
+			.canvas-box canvas {
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+			
+			button {
+				padding: 10px 20px;
+			}
+		</style>
+	</head>
+
+	<body onload="draw()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth; //初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+
+			function draw() {
+				ctx.fillStyle = 'rgba(0,0,0,0.05)';
+				ctx.beginPath();
+				ctx.moveTo(150,200);
+				ctx.lineTo(500,50);
+				ctx.lineTo(1000,400);
+				ctx.lineTo(500,700);
+				ctx.lineTo(100,400);
+				ctx.closePath();
+				ctx.fill();
+				ctx.clip();
+				
+				var img = new Image();
+				img.src = './source/timg.jpg';
+				img.onload = function(){
+					ctx.drawImage(img,100,200);
+				}
+				
+				
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas</title>
+		<style type="text/css">
+			canvas{
+				border: 1px solid #ddd;
+				margin: auto;
+			}
+		</style>
+	</head>
+	<body onload="initCanvas">
+		<canvas id="canvas01" width="700px" height="500px">不支持canvas</canvas>
+		<script type="text/javascript">
+			var canvasContent;
+			function initCanvas(){
+				var canvas = document.getElementById('canvas01');
+				if(canvas.getContent){
+					canvasContent = canvas.getContext('2d');
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-填充规则-api</title>
+		<style type="text/css">
+			*{
+				margin: 0;padding: 0;
+			}
+			html,body{
+				width: 100%;
+			}
+			.canvas-box{
+				width: 1000px;
+				height: 700px;
+				margin: auto;
+			}
+			.canvas-box canvas{
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+		</style>
+	</head>
+	<body onload="draw()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+		
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth;//初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+			function draw(){
+				
+				ctx.beginPath();
+				ctx.arc(200,200,200,0,Math.PI*2,true);
+				ctx.arc(200,200,50,0,Math.PI*2,true);
+				ctx.arc(200,200,100,0,Math.PI*2,true);
+				ctx.arc(200,200,150,0,Math.PI*2,true);
+				ctx.fill('evenodd');
+			}
+			
+		</script>
+	</body>
+</html>

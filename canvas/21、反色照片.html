@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-21、反色照片-api</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+			}
+			
+			.canvas-box {
+				width: 1400px;
+				height: 900px;
+				margin: auto;
+			}
+			
+			.canvas-box canvas {
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+			
+			button {
+				padding: 10px 20px;
+			}
+			.color{
+				width: 200px;
+				height: 50px;
+				text-align: center;
+				line-height: 50px;
+				font-size: 16px;
+				border: 1px solid #000;
+				text-shadow: 0 0 3px #fff;
+				font-weight: 700;
+			}
+		</style>
+	</head>
+
+	<body onload="init()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth; //初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+			var raf;//requestAnimationFrame句柄
+			
+			
+			
+			function init() {
+				var img = new Image();
+				img.src = './source/timg.jpg';
+				img.onload = function(){
+					ctx.drawImage(img,0,0,300,200);
+					
+					invert();
+					
+					grayscale();
+				}
+				
+				//反色
+				var invert = function(){
+					var imageData = ctx.getImageData(0,0,300,200);
+					var data = imageData.data;
+					for(var i=0;i<data.length;i+=4){
+						data[i] = 255-data[i];
+						data[i+1] = 255-data[i+1];
+						data[i+2] = 255-data[i+2];
+					}
+					ctx.putImageData(imageData,300,0);
+				}
+				
+				//灰度
+				var grayscale = function(){
+					var imageData = ctx.getImageData(0,0,300,200);
+					var data = imageData.data;
+					for(var i=0;i<data.length;i+=4){
+						var avg = (data[i]+data[i+1]+data[i+2])/3;
+						data[i] = avg;
+						data[i+1] = avg;
+						data[i+2] = avg;
+					}
+					ctx.putImageData(imageData,600,0);
+				}
+				
+			}
+			
+			
+		</script>
+	</body>
+
+</html>

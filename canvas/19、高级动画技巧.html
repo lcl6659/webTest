@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-19、高级动画技巧-api</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+			}
+			
+			.canvas-box {
+				width: 1400px;
+				height: 900px;
+				margin: auto;
+			}
+			
+			.canvas-box canvas {
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+			
+			button {
+				padding: 10px 20px;
+			}
+		</style>
+	</head>
+
+	<body onload="init()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth; //初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+			var raf;//requestAnimationFrame句柄
+			
+			function init() {
+				raf = window.requestAnimationFrame(draw);
+			}
+			
+			var ball = {
+				x:25,
+				y:25,
+				r:25,
+				color:'#009933',
+				vx:6,//x方向速度
+				vy:0,//y方向速度
+				draw:function(){
+					ctx.save();
+					ctx.beginPath();
+					ctx.arc(this.x,this.y,this.r,0,Math.PI*2,true);
+					ctx.closePath();
+					ctx.fillStyle = this.color;
+					ctx.fill();
+					ctx.restore();
+				}
+			}
+			canvas.addEventListener('click',function(e){
+				var x = e.offsetX;
+				var y = e.offsetY;
+				ball.x = x;
+				ball.y = y;
+				ball.draw();
+			});
+			canvas.addEventListener('mousemove',function(e){
+				clear();
+				var x = e.offsetX;
+				var y = e.offsetY;
+				ball.x = x;
+				ball.y = y;
+				ball.draw();
+			});
+			
+			function draw(){
+				
+				ctx.save();
+				
+				
+			}
+			
+			function clear() {
+				ctx.fillStyle = "rgba(255,255,255,0.5)";
+				ctx.fillRect(0,0,canvas.width,canvas.height);
+			}
+			
+			var n =0;
+			function draw01(){
+				/*ctx.clearRect(0,0,canvas.width,canvas.height);*/
+				ctx.save();
+				ctx.fillStyle = 'rgba(255,255,255,0.5)';
+				ctx.fillRect(0,0,canvas.width,canvas.height);
+				ball.draw();
+				
+				//x方向触边
+				if(ball.x+ball.vx>canvas.width-ball.r || ball.x+ball.vx<ball.r){
+					ball.vx = -ball.vx;
+				}
+				//y方向触边
+				if(ball.y+ball.vy>canvas.height-ball.r || ball.y+ball.vy<ball.r){
+					ball.vy = -ball.vy;
+					n++;
+				}
+				
+				//x方向速率改变
+				ball.x = ball.x+ball.vx;
+				if(Math.abs(ball.vx)<0.005){
+					ball.vx = 0;
+				}else{
+					if(ball.vx>0){
+						ball.vx = ball.vx - 0.005;
+					}else if(ball.vx<0){
+						ball.vx = ball.vx + 0.005;
+					}
+				}
+				
+				//y方向速率改变
+				if(n<10){
+					if(ball.vy>=0){
+						ball.vy = ball.vy+(9.8/60);
+					}else{
+						ball.vy = ball.vy+(9.8/60)+(0.05*n);
+					}
+					ball.y = ball.y+ball.vy;
+				}else{
+					ball.vy = 0;
+					ball.y = canvas.height-ball.r;
+				}
+				
+				if(n<10 || Math.abs(ball.vx)>0){
+					raf = window.requestAnimationFrame(draw);
+				}
+				
+				ctx.restore();
+			}
+
+			
+			
+		</script>
+	</body>
+
+</html>

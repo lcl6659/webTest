@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-绘制图片-api</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+			}
+			
+			.canvas-box {
+				width: 1400px;
+				height: 900px;
+				margin: auto;
+			}
+			
+			.canvas-box canvas {
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+			
+			button {
+				padding: 10px 20px;
+			}
+		</style>
+	</head>
+
+	<body onload="draw()">
+		<!--<img src="source/timg (2).jpg" width="200px" id="img"/>-->
+		<!--<video width="400" controls="controls" id="myVideo" poster="source/timg.jpg" autoplay="autoplay">
+			<source src="source/jq22com.mp4" type="video/mp4"></source>
+			当前浏览器不支持 video直接播放，点击这里下载视频： <a href="myvideo.webm">下载视频</a>
+		</video>
+		<button id="jieping">截屏</button>-->
+		<!--<canvas id="canvas02" width="300" height="200"></canvas>-->
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth; //初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			var ctx = canvas.getContext('2d');
+
+			function draw() {
+				ctx.fillStyle = 'rgba(0,0,0,0.1)';
+				ctx.fillRect(0, 0, canvasBox.clientWidth, canvasBox.clientHeight);
+				ctx.fillStyle = '#000'
+
+				/*var img = new Image(300);
+				img.src = './source/timg.jpg';
+				img.onload = function(){
+					ctx.drawImage(img,100,100);
+				}
+				*/
+
+				/*var img = document.getElementById('img');
+				ctx.drawImage(img,100,100);*/
+
+				/*var video = document.createElement('video');
+				video.src = './source/jq22com.mp4';
+				video.controls = 'true';
+				video.width = '300';
+				document.body.appendChild(video);
+				
+				ctx.drawImage(video,100,100);*/
+
+				/*var video = document.getElementById('myVideo');
+				var si = setInterval(function(){
+					console.log('结束：',video.ended);
+					if(video.ended){
+						clearInterval(si);
+					}
+					ctx.drawImage(video,100,100);
+				},100);
+				
+				document.getElementById('jieping').addEventListener('click',function(){
+					ctx.drawImage(video,100,100);
+				})*/
+
+				/*var canvas02 = document.getElementById('canvas02');
+				var ctx2 = canvas02.getContext('2d')
+				ctx2.fillStyle = 'rgba(255,0,0,1)';
+				ctx2.fillRect(0,0,300,200);
+				ctx2.strokeStyle = 'blue';
+				ctx2.beginPath();
+				ctx2.lineTo(10,20);
+				ctx2.lineTo(60,50);
+				ctx2.lineTo(100,180);
+				ctx2.lineTo(250,20);
+				ctx2.closePath();
+				ctx2.stroke();
+				
+				ctx.drawImage(canvas02,100,100);*/
+
+				/*var img = new Image()
+				img.src = './source/timg.jpg';
+				img.onload = function() {
+					Promise.all([
+						createImageBitmap(this, 0, 0, 100, 100),
+						createImageBitmap(this, 100, 0, 100, 100)
+					]).then(function(sprites) {
+						ctx.drawImage(sprites[0], 0, 0);
+						ctx.drawImage(sprites[1], 100, 100);
+					});
+					createImageBitmap(this,0,0,200,300).then(function(imageBitmap){
+						ctx.drawImage(imageBitmap,100,100);
+					});
+				}*/
+				
+				
+				var img = new Image();
+				img.src = './source/timg (1).jpg';
+				img.onload = function(){
+					ctx.drawImage(img,700,50,300,300,100,100,200,200);
+				}
+				
+
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-矩形api</title>
+		<style type="text/css">
+			*{
+				margin: 0;padding: 0;
+			}
+			html,body{
+				width: 100%;
+			}
+			.canvas-box{
+				width: 1000px;
+				height: 700px;
+				margin: auto;
+			}
+			.canvas-box canvas{
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+		</style>
+	</head>
+	<body onload="draw()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+		
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth;//初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			function draw(){
+				var ctx = canvas.getContext('2d');
+				
+				ctx.fillStyle = 'blue';
+				ctx.fillRect(100,100,300,300);
+				
+				ctx.strokeStyle = 'red';
+				ctx.strokeRect(500,100,300,300);
+				
+				ctx.clearRect(250,175,300,150)
+				
+			}
+		</script>
+	</body>
+</html>

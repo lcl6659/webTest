@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas-arc-api</title>
+		<style type="text/css">
+			*{
+				margin: 0;padding: 0;
+			}
+			html,body{
+				width: 100%;
+			}
+			.canvas-box{
+				width: 1000px;
+				height: 700px;
+				margin: auto;
+			}
+			.canvas-box canvas{
+				margin: auto;
+				border: 1px solid #ddd;
+			}
+		</style>
+	</head>
+	<body onload="draw()">
+		<div class="canvas-box" id="canvasBox">
+			<canvas id="canvas"></canvas>
+		</div>
+		
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var canvasBox = document.getElementById('canvasBox');
+			canvas.width = canvasBox.clientWidth;//初始化canvas高宽
+			canvas.height = canvasBox.clientHeight;
+			function draw(){
+				var ctx = canvas.getContext('2d');
+				
+				ctx.beginPath();
+				ctx.arc(100,100,50,0,2*Math.PI);
+				ctx.closePath();
+				ctx.strokeStyle = 'red';
+				ctx.stroke();
+				
+				ctx.beginPath();
+				ctx.moveTo(400,100);
+				ctx.lineTo(450,100);
+				ctx.arc(400,100,50,0,0.5*Math.PI);
+				ctx.closePath();
+				ctx.fill();
+				
+				ctx.beginPath();
+				ctx.moveTo(400,100);
+				ctx.lineTo(400,150);
+				ctx.arc(400,100,50,0.5*Math.PI,1*Math.PI);
+				ctx.closePath();
+				ctx.fillStyle = 'red';
+				ctx.fill();
+				
+				ctx.beginPath();
+				ctx.moveTo(400,100);
+				ctx.lineTo(350,100);
+				ctx.arc(400,100,50,1*Math.PI,1.5*Math.PI);
+				ctx.closePath();
+				ctx.fillStyle = 'blue';
+				ctx.fill();
+				
+				ctx.beginPath();
+				ctx.moveTo(400,100);
+				ctx.lineTo(400,50);
+				ctx.arc(400,100,50,1.5*Math.PI,2*Math.PI);
+				ctx.closePath();
+				ctx.fillStyle = '#0080BB';
+				ctx.fill();
+				
+				
+			}
+		</script>
+	</body>
+</html>
