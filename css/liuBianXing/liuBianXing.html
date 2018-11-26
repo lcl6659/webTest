@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>六边形</title>
+		<style type="text/css">
+			#hexagon {
+			    width: 100px;
+			    height: 55px;
+			    background: #fc5e5e;
+			    position: relative;
+			    margin: 100px auto;
+			}
+			  
+			#hexagon:before {
+			    content: "";
+			    width: 0;
+			    height: 0;
+			    position: absolute;
+			    top: -25px;
+			    left: 0;
+			    border-left: 50px solid transparent;
+			    border-right: 50px solid transparent;
+			    border-bottom: 25px solid #fc5e5e;
+			}
+			  
+			#hexagon:after {
+			    content: "";
+			    width: 0;
+			    height: 0;
+			    position: absolute;
+			    bottom: -25px;
+			    left: 0;
+			    border-left: 50px solid transparent;
+			    border-right: 50px solid transparent;
+			    border-top: 25px solid #fc5e5e;
+			}   
+		</style>
+	</head>
+	<body>
+		<div id="hexagon"></div>
+	</body>
+</html>

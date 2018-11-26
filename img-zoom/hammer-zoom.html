@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>hammer图片缩放，拖动 - 手机端适配</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="Copyright" content="mlrc">
+		<meta name="format-detection" content="telephone=no">
+		<script src="zepto-1.2.0.js"></script>
+		<script src="zepto.touchAnimate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="hammer-2.0.8.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+				border: none;
+			}
+			.img-wrap {
+				width: 100%;
+				position: relative;
+				overflow: hidden;
+				background-color: #204D74;
+			}
+			.img-wrap img {
+				float: left;
+				width: 100%;
+				height: auto;
+				position: relative;
+				top: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="container">
+			<div style="height: 400px;">
+				顶部
+			</div>
+			<div class="img-wrap" id="imgWrap">
+				<img src="1.jpg" />
+			</div>
+			<div id="result"></div>
+			<div style="height: 500px;">
+				底部
+			</div>
+		</div>
+		<script type="text/javascript">
+		
+			//参数存储对象
+			var imgZoomParm = {
+				imgWidth : $(".img-wrap img").width(),
+				imgWidthChange : $(".img-wrap img").width(),
+				firstPinch:1,
+				imgTop:0,
+				imgLeft:0,
+				bigState:0, //放大状态 0没放大  ，1放大
+				panState:0,//图片滑动状态
+				panStateTimeOut:null,//修改记录图片滑动状态的句柄
+				dbClickTimeOut:null,
+				dbState:0
+			}
+		
+			$(function() {
+				//创建一个新的hammer对象并且在初始化时指定要处理的dom元素
+				var hammertime = new Hammer($(".img-wrap img")[0]);
+				//为该dom元素指定触屏移动事件
+				hammertime.add(new Hammer.Pinch());
+				
+				//添加事件
+				hammertime.on("pinchstart", function(e) {
+					imgPinchPanFunc.setImgWrapheight();
+				});
+				
+				/*hammertime.on("pinchin", function(e) {
+					var $_img = $(".img-wrap img");
+					if($_img.width()>imgZoomParm.imgWidth){
+						$_img.width(imgZoomParm.imgWidthChange*e.scale);
+						var centerX = e.center.x;
+						var centerY = e.center.y;
+						$_img.css('top',imgZoomParm.imgTop+e.center.y*(1-e.scale)+"px");
+						$_img.css('left',imgZoomParm.imgLeft+e.center.x*(1-e.scale)+"px");
+						$("#result").text("缩小"+e.scale+",中心点:"+JSON.stringify(e.center)+"detailX:"+e.deltaX);
+					}
+				});
+				
+				hammertime.on("pinchout", function(e) {
+					var $_img = $(".img-wrap img");
+					imgZoomParm.bigState = 1;
+					if($_img.width()<(imgZoomParm.imgWidth*3)){
+						$_img.width(imgZoomParm.imgWidthChange*e.scale);
+						var centerX = e.center.x;
+						var centerY = e.center.y;
+						$_img.css('top',imgZoomParm.imgTop-e.center.y*(e.scale-1)+"px");
+						$_img.css('left',imgZoomParm.imgLeft-e.center.x*(e.scale-1)+"px");
+						$("#result").text("放大"+e.scale+",中心点:"+JSON.stringify(e.center)+"detailX:"+e.deltaX);
+					}
+				});
+				
+				hammertime.on("pinchend", function(e) {
+					var $_img = $(".img-wrap img");
+					$("#result").text("$_img.width():"+$_img.width()+",imgWidth"+imgZoomParm.imgWidth);
+					if($_img.width()<imgZoomParm.imgWidth){
+						imgPinchPanFunc.swipeAnimate($(".img-wrap img"),{"width":imgZoomParm.imgWidth,'top':"0px",'left':"0px"},function(){
+							imgZoomParm.imgWidthChange = $_img.width();
+					
+							//如果图片宽度小于初始化宽度，图片居中显示
+							imgPinchPanFunc.imgAnimateChangePosition($(".img-wrap img"),$(".img-wrap"),function(){
+								imgPinchPanFunc.setImgPosition($(".img-wrap img"));
+							});
+						});
+					}else{
+						imgZoomParm.imgWidthChange = $_img.width();
+					
+						//如果图片宽度小于初始化宽度，图片居中显示
+						imgPinchPanFunc.imgAnimateChangePosition($(".img-wrap img"),$(".img-wrap"),function(){
+							imgPinchPanFunc.setImgPosition($(".img-wrap img"));
+						});
+					}
+				});*/
+				
+				//图片滑动
+				hammertime.on("panup", function(e) {
+					var $_img_wrap =  $(".img-wrap");
+					var $_img = $(".img-wrap img");
+					
+					var imgWrapHeight = $_img_wrap.height();
+					var imgHeight = $_img.height();
+					var topNow = $_img.position().top;
+					var bottomNow = -topNow+imgWrapHeight-imgHeight;
+					if(bottomNow>0){
+						console.log("向上："+bottomNow);
+						$(window).scrollTop($(window).scrollTop()+10);
+					}
+				});
+				//图片滑动
+				hammertime.on("pandown", function(e) {
+					var $_img = $(".img-wrap img");
+					
+					var topNow = $_img.position().top;
+					
+					if(topNow>0){
+						$(".img-wrap .zhedang").css("display","block");
+						console.log("向下："+topNow);
+						$(window).scrollTop($(window).scrollTop()-10);
+					}
+				});
+				//图片滑动
+				hammertime.on("pan", function(e) {
+					
+					var $_img_wrap =  $(".img-wrap");
+					var $_img = $(".img-wrap img");
+					
+					imgZoomParm.panState = 1;
+					imgPinchPanFunc.setImgWrapheight();
+					var deltaX =e.deltaX;
+					var deltaY =e.deltaY;
+					
+					$_img.css('top',imgZoomParm.imgTop+deltaY+"px");
+					$_img.css('left',imgZoomParm.imgLeft+deltaX+"px");
+					clearTimeout(imgZoomParm.panStateTimeOut);
+				});
+				
+				hammertime.on("panend", function(e) {
+					
+					//位置调整
+					imgPinchPanFunc.imgAnimateChangePosition($(".img-wrap img"),$(".img-wrap"),function(){
+						imgPinchPanFunc.setImgPosition($(".img-wrap img"));
+					});
+					
+					imgZoomParm.panStateTimeOut = setTimeout(function(){
+						imgZoomParm.panState = 0;
+					},500);
+					
+					$("#result").text("滑动结束了");
+				});
+				
+				$(".img-wrap").on("click","img",function(e){
+					
+					imgZoomParm.dbState=1;
+					if(imgZoomParm.dbClickTimeOut && imgZoomParm.dbState===1){
+						clearTimeout(imgZoomParm.dbClickTimeOut);
+						imgZoomParm.dbClickTimeOut = null;
+						imgZoomParm.dbState = 0;
+						
+						console.log(e);
+						
+						imgPinchPanFunc.setImgWrapheight();
+						if(imgZoomParm.bigState==0){
+							imgZoomParm.bigState = 1;
+							var imgWrapOffsetTop = $(".img-wrap").offset().top;
+							var imgWrapOffsetLeft = $(".img-wrap").offset().left;
+							var clickPostionTop = e.pageY-imgWrapOffsetTop;//点击位置相对img-wrap
+							var clickPostionLeft = e.pageX-imgWrapOffsetLeft;
+							
+							$("#result").text("clickPostionTop:"+clickPostionTop+",clickPostionLeft:"+clickPostionLeft);
+							$("#result").text($("#result").text()+"imgWrapOffsetTop:"+imgWrapOffsetTop+",imgWrapOffsetLeft:"+imgWrapOffsetLeft);
+							
+							imgPinchPanFunc.swipeAnimate($(".img-wrap img"),{"width":imgZoomParm.imgWidth*2,'top':-(clickPostionTop)+"px",'left':-(clickPostionLeft)+"px"},function(){
+								imgZoomParm.imgWidthChange = $(".img-wrap img").width();
+								imgPinchPanFunc.imgAnimateChangePosition($(".img-wrap img"),$(".img-wrap"),function(){
+									imgPinchPanFunc.setImgPosition($(".img-wrap img"));
+								});
+							});
+						}else{
+							imgZoomParm.bigState = 0;
+							imgPinchPanFunc.swipeAnimate($(".img-wrap img"),{"width":imgZoomParm.imgWidth,'top':"0px",'left':"0px"},function(){
+								imgZoomParm.imgWidthChange = $(".img-wrap img").width();
+								imgPinchPanFunc.imgAnimateChangePosition($(".img-wrap img"),$(".img-wrap"),function(){
+									imgPinchPanFunc.setImgPosition($(".img-wrap img"));
+								});
+							});
+						}
+					}
+					imgZoomParm.dbClickTimeOut = setTimeout(function(){
+						clearTimeout(imgZoomParm.dbClickTimeOut);
+						imgZoomParm.dbClickTimeOut = null;
+						imgZoomParm.dbState = 0;
+					},200);
+					
+					
+				});
+				
+				$("#container").on("swipeLeft",function(e){
+					if(imgZoomParm.panState == 1){
+						console.log("图片左滑动");
+					}else{
+						console.log("左滑动");
+					}
+					
+				});
+				
+				$("#container").on("swipeRight",function(e){
+					if(imgZoomParm.panState == 1){
+						console.log("图片右滑动");
+					}else{
+						console.log("右滑动");
+					}
+					
+				});
+				
+				$(".img-wrap img")[0].addEventListener("touchmove",function(e){
+					e.preventDefault();
+				});
+				
+			});
+			
+			(function(window){
+				//初始化图片外框及图片属性
+				function setImgWrapheight(){
+					if(imgZoomParm.firstPinch==1){
+						imgZoomParm.firstPinch = 0;
+						var height =  $(".img-wrap img").height();
+						$(".img-wrap").css("height",height+"px!important");
+						$(".img-wrap img").css("position","absolute");
+					}
+				}
+				
+				//图片位置调整动画
+				function swipeAnimate($_element,animateP,cb){
+					$_element.animate(animateP,200,"ease-out",function(){
+						cb && cb();
+					});
+				}
+				
+				
+				function setImgPosition($_elememt){
+					imgZoomParm.imgTop = $_elememt.position().top;
+					imgZoomParm.imgLeft = $_elememt.position().left;
+				}
+				
+				//图片位置自动调整
+				function imgAnimateChangePosition($_img,$_img_wrap,cb){
+					var imgWrapHeight = $_img_wrap.height();
+					var imgHeight = $_img.height();
+					var topNow = $_img.position().top;
+					var leftNow = $_img.position().left;
+					var bottomNow = -topNow+imgWrapHeight-imgHeight;
+					var rightNow = -leftNow+imgZoomParm.imgWidth-imgZoomParm.imgWidthChange;
+					var swipeToLeft=0,swipeToTop=0;
+					var changePositionState = 0;
+					
+					
+					//设置自动调整的top和left
+					if(imgZoomParm.imgWidth>=imgZoomParm.imgWidthChange){
+						changePositionState = 1;
+						//图片缩小了
+						swipeToLeft= (imgZoomParm.imgWidth-imgZoomParm.imgWidthChange)/2;
+						swipeToTop = (imgWrapHeight-imgHeight)/2;
+					}else{
+						//图片放大了
+						if(topNow>0 && leftNow>0){
+							changePositionState = 1;
+							swipeToTop = 0;
+							swipeToLeft= 0;
+						}else if(topNow>0 && leftNow<0 && rightNow<0){
+							changePositionState = 1;
+							swipeToTop = 0;
+							swipeToLeft= "";
+						}else if(topNow>0 && leftNow<0 && rightNow>0){
+							var newleftP = imgZoomParm.imgWidthChange - imgZoomParm.imgWidth;
+							changePositionState = 1;
+							swipeToTop = 0;
+							swipeToLeft= -newleftP;
+						}else if(topNow<0 && bottomNow<0 && rightNow>0){
+							var newleftP = imgZoomParm.imgWidthChange - imgZoomParm.imgWidth;
+							changePositionState = 1;
+							swipeToTop = "";
+							swipeToLeft= -newleftP;
+						}else if(bottomNow>0 && rightNow>0){
+							var newleftP = imgZoomParm.imgWidthChange - imgZoomParm.imgWidth;
+							var newTop = imgHeight - imgWrapHeight;
+							changePositionState = 1;
+							swipeToTop = -newTop;
+							swipeToLeft= -newleftP;
+						}else if(bottomNow>0 && rightNow<0 && leftNow<0){
+							var newTop = imgHeight - imgWrapHeight;
+							changePositionState = 1;
+							swipeToTop = -newTop;
+							swipeToLeft= "";
+						}else if(bottomNow>0 && leftNow>0){
+							var newTop = imgHeight - imgWrapHeight;
+							changePositionState = 1;
+							swipeToTop = -newTop;
+							swipeToLeft= 0;
+						}else if(topNow<0 && leftNow>0 && bottomNow<0){
+							changePositionState = 1;
+							swipeToTop = "";
+							swipeToLeft= 0;
+						}
+					}
+					
+					if(changePositionState ==1){
+						var animateP = {};
+						if(swipeToTop || swipeToTop===0){
+							animateP.top = swipeToTop+"px"
+						}
+						if(swipeToLeft || swipeToLeft ===0){
+							animateP.left = swipeToLeft+"px"
+						}
+						swipeAnimate($_img,animateP,function(){
+							cb && cb();
+						});
+					}else{
+						cb && cb();
+					}
+					
+				}
+				
+				window.imgPinchPanFunc = {
+					setImgWrapheight:setImgWrapheight,
+					swipeAnimate:swipeAnimate,
+					setImgPosition:setImgPosition,
+					imgAnimateChangePosition:imgAnimateChangePosition
+				}
+				
+				
+			})(window);
+			
+			
+		</script>
+	</body>
+
+</html>

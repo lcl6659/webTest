@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas - 圆</title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#canvasbody{
+			width: 400px;
+			height: 400px;
+			margin: 0px auto;
+			position: relative;
+			top: 200px;
+		}
+		#canvasbox{
+			width: 100%;
+		}
+		#circle{
+			background-color: #fff;
+		}
+		.content{
+			width: 360px;
+			height: 360px;
+			position: absolute;
+			z-index: 400;
+			top: 0;left: 0;right: 0;bottom: 0;
+			margin: auto;
+			background-color: #fff;
+			border-radius: 50%;
+		}
+		
+	</style>
+	<body>
+		<div class="canvasbox">
+			<div id="canvasbody">
+				<canvas id="circle"></canvas>
+				<div class="content"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var canvas =document.getElementById("circle");
+			canvas.width = 400;
+			canvas.height = 400;
+			var context = canvas.getContext('2d');
+			var n = 0.01;
+			/*var i = setInterval(function(){
+				if(n>1.5){
+					clearInterval(i);
+				}else{
+					context.beginPath();
+					var end = n*Math.PI;
+					context.arc(200,200,190,0,end,false);
+					context.strokeStyle = '#eb2e2e';
+					context.lineWidth = 10;
+					context.lineCap="round";
+					context.stroke();
+					context.closePath();
+					n=n+0.02;
+				}
+				console.log(n);
+				
+			},30);*/
+			
+			render();
+			//循环渲染
+			function render(){
+				if(n>0.5){
+					
+				}else{
+					context.beginPath();
+					var end = n*2*Math.PI;
+					context.arc(200,200,190,0,end,false);
+					context.strokeStyle = '#eb2e2e';
+					context.lineWidth = 10;
+					context.lineCap="round";
+					context.stroke();
+					context.closePath();
+					n=n+0.02;
+					requestAnimationFrame(render);
+				}
+				console.log(n);
+			}
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

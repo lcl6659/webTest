@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Generator控制流程实现 - 异步并行</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//异步操作，返回promise
+			function step(promise){
+				if(promise){
+					return promise.then(function(value){
+						value = value+1;
+						return value;
+					});	
+				}else{
+					var p = new Promise(function(resolve,reject){
+			            setTimeout(function(){
+			            	var r = parseInt(Math.random()*100);
+			            	console.log(r);
+			                resolve(r);//100以内的随机数
+			            },2000);
+			        });
+			        return p;
+				}
+			}
+			
+			//Generator函数，接受一个异步函数数组
+			function* TaskGen(stepArr){
+				try{
+					var p,n=0;
+					var valueArr = yield stepArr;
+				}catch(err){
+					console.log(e)
+				}
+			}
+			
+			
+			//运行函数，最终数据才cb返回
+			function runTask(stepArr,cb){
+				var task = TaskGen(stepArr);
+				var taskObj;
+				taskObj = task.next();
+				task.next();
+				var pArr = taskObj.value;
+				var stepValueArr = [];
+				pArr.forEach(function(p){
+					p.then(function(value){
+						stepValueArr.push(value);
+						if(stepValueArr.length==pArr.length){
+							cb && cb(stepValueArr);
+						}
+					});
+				});
+			}
+		</script>
+		<script type="text/javascript">
+			var stepArr = [step(),step(),step(),step(),step()];
+			runTask(stepArr,function(value){
+				console.log('最终返回结果',value);//[9, 98, 37, 99, 9]
+			});
+		</script>
+	</body>
+</html>

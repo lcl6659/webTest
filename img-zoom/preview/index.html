@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="x5-orientation" content="portrait">
+	    <meta name="screen-orientation" content="portrait">
+	    <meta name="apple-mobile-web-app-capable" content="yes" />
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="Copyright" content="mlrc">
+	    <meta name="format-detection" content="telephone=no">
+		<title>图片预览</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				border: none;
+			}
+			#questionBox{
+				width: 100%;
+			}
+			#questionBox img{
+				width: 100%;
+			}
+			.myImgPreview{
+				position: fixed;
+				width: 100%;
+				top: 0;
+				display: none;
+				z-index: 500;
+				background-color: #888888;
+			}
+			.myImgPreview .img-wrap{
+				width: 100%;
+				height: 100%;
+				position: relative;
+				overflow: hidden;
+				background-color: #888;
+			}
+			.myImgPreview .img-wrap img {
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 50;
+				opacity: 0.999;
+			}
+			.msg{
+				width: 100%;
+				height: 100px;
+				z-index: 1000;
+				position: absolute;
+				top: 0;
+				background-color: white;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="questionBox">
+			<img  src="../1.jpg"/>
+		</div>
+		<div class="msg">
+			<span>信息：</span><br/>
+			<div id="msg">
+				
+			</div>
+		</div>
+		<div class="myImgPreview" id="myImgPreview">
+			<div class="img-wrap">
+				<img  src=""/>
+			</div>
+		</div>
+		<script src="../zepto-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../zepto.touchAnimate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../hammer-2.0.8.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="hammerPaperFunc.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			$("#myImgPreview").height(document.documentElement.clientHeight);
+			//图片点击
+			$("#questionBox").on("click","img",function(){
+				if($("#myImgPreview").find("img").attr("src")){
+					$("#myImgPreview").css("display","block");
+				}else{
+					$("#myImgPreview").find(".img-wrap").empty().append($("<img/>"))
+					var imgSrc = $(this).attr("src");
+					var docHeight = document.documentElement.clientHeight;
+					var docWidth = document.documentElement.clientWidth;
+					
+					var biLu =  docWidth/$(this).width();//原图宽度比屏幕宽度
+					
+					var imgHeight = $(this).height()*biLu;
+					var imgWidth = $(this).width()*biLu;			
+					$("#myImgPreview").find("img").attr("src",imgSrc);
+					
+					if(imgHeight>docHeight){
+						var left = (docWidth-imgWidth*(docHeight/imgHeight))/2;
+						var newWidth = imgWidth*(docHeight/imgHeight);
+						$("#myImgPreview").find("img").css({"height":docHeight+"px","width":newWidth+"px","left":left});
+					}else{
+						var top = (docHeight-imgHeight)/2;
+						$("#myImgPreview").find("img").css({"height":imgHeight+"px","width":docWidth+"px","top":top});
+					}
+					$("#myImgPreview").css("display","block");
+					
+					imgPinchPanFunc.addHammerEvent();
+					imgPinchPanFunc.setImgPosition($("#myImgPreview .img-wrap img"));
+				}
+			});
+		</script>
+	</body>
+</html>

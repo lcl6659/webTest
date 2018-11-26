@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html class=''>
+
+	<head>
+		<title>波纹效果</title>
+		<meta charset="UTF-8">
+		<style class="cp-pen-styles">
+			#next{
+				width: 500px;
+				height: 500px;
+				border: 1px solid #666666;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.dot {
+				height: 2px;
+				width: 2px;
+				border-radius: 100%;
+				position: absolute;
+				z-index: 0;
+				animation: sploosh 3s cubic-bezier(0.165, 0.84, 0.44, 1);
+				background: transparent;
+			}
+			
+			@keyframes sploosh {
+				0% {
+					box-shadow: 0 0 0 0px rgba(66, 166, 223, 0.7);
+					background: rgba(66, 166, 223, 0.7);
+				}
+				100% {
+					box-shadow: 0 0 0 300px rgba(66, 166, 223, 0);
+					background: rgba(66, 166, 223, 0);
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="container">
+			<div id="next"></div>
+		</div>
+		<script src='jquery.js'></script>
+		<script>
+			// initial animation
+
+			$(window).ready(function() {
+				setTimeout(function() {
+					setTimeout(function() {
+						$('#container').append('<div class="dot" style="top:50%;left:50%;"></div>')
+					}, 900);
+					setTimeout(function() {
+						$('#container .dot').remove();
+					}, 2900);
+				}, 1500);
+			});
+
+			$(function(){
+				$('#next').on('mousedown', function(e) {
+					var left = e.pageX;
+					var top = e.pageY;
+
+					$(this).append('<div class="dot" style="top:' + top + 'px;left:' + left + 'px;"></div>')
+					setTimeout(function() {
+						$('#container .dot:first-of-type').remove();
+					}, 3000);
+				});
+			});
+		</script>
+	</body>
+
+</html>

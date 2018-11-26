@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="description" content="GMS: CountDown " />
+		<meta charset="utf-8">
+		<title>GMS: CountDown </title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			@-webkit-keyframes rot_left {
+				0% {
+					transform: rotate(0deg);
+				}
+				50% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(180deg);
+				}
+			}
+			
+			@-webkit-keyframes rot_right {
+				0% {
+					transform: rotate(0deg);
+				}
+				50% {
+					transform: rotate(180deg);
+				}
+				100% {
+					transform: rotate(180deg);
+				}
+			}
+			
+			@keyframes rot_left {
+				0% {
+					transform: rotate(0deg);
+				}
+				50% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(180deg);
+				}
+			}
+			
+			@keyframes rot_right {
+				0% {
+					transform: rotate(0deg);
+				}
+				50% {
+					transform: rotate(180deg);
+				}
+				100% {
+					transform: rotate(180deg);
+				}
+			}
+			
+			#outer {
+				width: 180px;
+				height: 180px;
+				margin: 0 auto;
+				background: rgb(173, 88, 36);
+				border-radius: 50%;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			#inner {
+				width: 150px;
+				height: 150px;
+				background: rgb(224, 151, 83);
+				border-radius: 50%;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -75px;
+				margin-top: -75px;
+				text-align: center;
+				line-height: 150px;
+			}
+			
+			#load_left,
+			#load_right {
+				width: 90px;
+				height: 180px;
+				/*background: rgb(249, 199, 149);*/
+				position: absolute;
+				overflow: hidden;
+			}
+			
+			#load_left {
+				top: 0;
+				left: 0;
+				border-top-left-radius: 100% 50%;
+				border-bottom-left-radius: 100% 50%;
+				transform-origin: 100% 50%;
+				/*-webkit-animation: rot_left 10s linear infinite;*/
+			}
+			
+			#load_right {
+				top: 0;
+				left: 50%;
+				border-top-right-radius: 100% 50%;
+				border-bottom-right-radius: 100% 50%;
+				transform-origin: 0 50%;
+			}
+			
+			#load_left span,
+			#load_right span {
+				display: inline-block;
+				width: 90px;
+				height: 180px;
+				background: rgb(249, 199, 129);
+				position: absolute;
+			}
+			
+			#load_left span {
+				border-top-left-radius: 100% 50%;
+				border-bottom-left-radius: 100% 50%;
+				transform-origin: 100% 50%;
+				-webkit-animation: rot_left 10s linear 1;
+				animation: rot_left 10s linear 1;
+			}
+			
+			#load_right span {
+				top: 0;
+				right: 0%;
+				border-top-right-radius: 100% 50%;
+				border-bottom-right-radius: 100% 50%;
+				transform-origin: 0 50%;
+				-webkit-animation: rot_right 10s linear 1;
+				animation: rot_right 10s linear 1;
+			}
+			
+			#control {
+				width: 260px;
+				height: 30px;
+				margin: 10px auto;
+				padding: 15px;
+				border: 1px dotted green;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="outer">
+			<div id="load_left"><span></span></div>
+			<div id="load_right"><span></span></div>
+			<div id="inner">progress</div>
+		</div>
+		<div id="control">
+			<label for="ctr">范围控制
+    		<input type="range" id="ctr"min="0" max="360" step="1" />
+		</div>
+
+<script>
+var leftRot = document.getElementById('load_left').children[0],
+    rightRot = document.getElementById('load_right').children[0],
+    showVal = document.getElementById('inner');
+    ctr = document.getElementById('ctr');
+
+function rotControl(e) {
+  var target = e.target,
+      val = target.value;
+  console.log(val);
+  if (val <= 180) {
+    rightRot.style.transform = 'rotate(' + val + 'deg)';
+    leftRot.style.transform = 'rotate(0deg)'; 
+  }
+  if (val>180) {
+    leftRot.style.transform = 'rotate(' + (val - 180) + 'deg)';
+    rightRot.style.transform = 'rotate(180deg)';
+  }
+  
+  if (showVal.innerText) {
+    showVal.innerText = Math.floor((val / 360) * 100)  + '%';
+  } else if (showVal.textContent) {
+    showVal.textContent = Math.floor((val / 360) * 100)  + '%';
+  }
+  
+}
+
+ctr.addEventListener('change', rotControl, false);
+
+</script>
+</body> 
+</html>

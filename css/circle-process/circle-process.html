@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>圆形3进度条</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="Copyright" content="mlrc">
+		<meta name="format-detection" content="telephone=no">
+		<style type="text/css">
+			.circleProgress_wrapper {
+				width: 200px;
+				height: 200px;
+				margin: 50px auto;
+				position: relative;
+			}
+			
+			.wrapper {
+				width: 100px;
+				height: 200px;
+				position: absolute;
+				top: 0;
+				overflow: hidden;
+			}
+			
+			.right {
+				right: 0;
+			}
+			
+			.left {
+				left: 0;
+			}
+			
+			.circleProgress {
+				box-sizing: border-box;
+				width: 200px;
+				height:200px;
+				border: 10px solid rgb(232, 232, 12);
+				border-radius: 50%;
+				position: absolute;
+				top: 0;
+				-webkit-transform: rotate(45deg);
+			}
+			
+			.rightcircle {
+				border-top: 10px solid #FFFFFF;
+				border-right: 10px solid #FFFFFF;
+				right: 0;
+				-webkit-transform: rotate(90deg);
+			}
+			
+			.leftcircle {
+				border-bottom: 10px solid #FFFFFF;
+				border-left: 10px solid #FFFFFF;
+				left: 0;
+				-webkit-transform: rotate(225deg);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="circleProgress_wrapper">
+			<div class="wrapper right">
+				<div class="circleProgress rightcircle"></div>
+			</div>
+			<div class="wrapper left">
+				<div class="circleProgress leftcircle"></div>
+			</div>
+		</div>
+	</body>
+
+</html>

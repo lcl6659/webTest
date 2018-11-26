@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Pinch</title>
+		<script src="jquery-2.1.4.min.js"></script>
+		<script src="hammer-2.0.8.min.js"></script>
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.pinch-zoom-container {
+				overflow: hidden;
+				position: relative;
+			}
+			
+			.pinch-zoom,
+			.pinch-zoom-container {
+				width: 100%!important;
+				height: 100%!important;
+			}
+			
+			.pinch-zoom {
+				position: absolute;
+			}
+			
+			.pinch-zoom img {
+				position: absolute;
+				width: 100%;
+				left: 50%;
+				top: 50%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- ***************************** -->
+		<div class="pinch-zoom-container">
+			<div class="pinch-zoom" id="test" data-scale="1">
+				<img src="2.jpg" id="testimg">
+			</div>
+		</div>
+		<!-- ***************************** -->
+		<script type="text/javascript">
+			$(function() {
+				$("img").load(function() {
+					$(this).css("marginLeft", (-1 * $(this).width() / 2) + "px");
+					$(this).css("marginTop", (-1 * $(this).height() / 2) + "px");
+				});
+
+				//创建一个新的hammer对象并且在初始化时指定要处理的dom元素
+				var hammertime = new Hammer($(".pinch-zoom")[0]);
+				//var hammertime = new Hammer(document.getElementById("test"));
+				hammertime.get('pinch').set({
+					enable: true
+				});
+				hammertime.add(new Hammer.Pinch());
+				//hammertime.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+				hammertime.get('swipe').set({
+					direction: Hammer.DIRECTION_ALL
+				}); //横向和纵向的swipe事件
+				hammertime.get('swipe').set({
+					threshold: 0
+				}); //识别之前所需的最小距离
+				hammertime.get('swipe').set({
+					velocity: 0.2
+				}); //识别之前所需的最小距离
+
+				//捏开
+				hammertime.on("pinchout", function(e) {
+					console.log(">>>>>>>>>>>>>>>>");
+					var W = $("#testimg").width();
+					var H = $("#testimg").height();
+					var scale = 2;
+					//var mouseX=e.pageX;//鼠标
+					//var mouseY=e.pageY;
+					var mouseX = e.center.x; //捏开点
+					var mouseY = e.center.y;
+
+					if($("#test").attr("data-scale") == 1) {
+						var translateX = 0;
+						var translateY = 0;
+						//计算当前点击点相对于图片的偏移比例
+						var posX = mouseX / W;
+						var posY = mouseY / H;
+						translateX = (W * posX / scale) * -1;
+						translateY = (H * posY / scale) * -1;
+
+						console.log("###[" + translateX + "]###");
+						$("#test").css("transformOrigin", "0% 0%");
+						$("#test").css("transform", "scale(2,2) translate(" + translateX + "px, " + translateY + "px)");
+						$("#test").attr("data-x", translateX);
+						$("#test").attr("data-y", translateY);
+						$("#test").attr("data-scale", 2);
+
+						console.log("点击点的百分比>>>   " + posX + "," + posY + "                  ");
+						console.log("偏移>>>   " + translateX + "," + translateY + "                  ");
+						//console.log("鼠标："+mouseX+","+mouseY+"                  ");
+						//console.log("捏开开开开>>>>  " + e.center.x + "," + e.center.y+"                  ");
+						//console.log("x————————"+ $("#test").attr("data-x") );
+						//onsole.log("y————————"+ $("#test").attr("data-y") );
+
+					}
+
+				});
+				//捏合
+				hammertime.on("pinchin", function(e) {
+					$("#test").css("transformOrigin", "scale(1,1)");
+					$("#test").css("transform", "scale(1,1) translate(0px,0px)");
+					$("#test").attr("data-x", 0);
+					$("#test").attr("data-y", 0);
+					$("#test").attr("data-scale", 1);
+					console.log("捏合合合合>>              ");
+				});
+
+				function move123(x, y) {
+					//console.log($("#test").attr("data-scale")+"【】【】")
+					if($("#test").attr("data-scale") == 2) {
+						var W = $("#testimg").width();
+						var H = $("#testimg").height();
+						var winW = $(document).width();
+						var winH = $(document).height();
+
+						var marginTop = (winH - H) * -1 / 2;
+						var marginLeft = winW * -1 / 2;
+						var marginBottom = -1 * (winH / 2 - (-1 * marginTop));
+						//console.log("marginTop="+marginTop);
+						//console.log("marginBottom="+marginBottom);
+
+						var translateX = $("#test").attr("data-x");
+						var translateY = $("#test").attr("data-y");
+						translateX = parseFloat(translateX) + x;
+						translateY = parseFloat(translateY) + y;
+
+						//console.log("marginBottom————::: "+ marginBottom +"           ]");
+						//console.log("原始的：translateX = "+ translateX + "      " +"translateY = " + translateY);
+						if(translateX > 0) {
+							translateX = 0;
+							console.log("分支: 左往右拨动");
+						}
+						if(translateX < marginLeft) {
+							translateX = marginLeft;
+							console.log("分支: 右往左拨动");
+						}
+						if(translateY < marginTop) {
+							translateY = marginTop;
+							console.log("分支: 下往上拨动");
+						}
+						if(translateY > marginBottom) {
+							translateY = marginBottom;
+							console.log("分支: 上往下拨动");
+						}
+						//console.log("改了的：translateX = "+ translateX + "      " +"translateY = " + translateY);
+
+						$("#test").css("transform", "scale(2,2) translate(" + translateX + "px, " + translateY + "px)");
+						$("#test").attr("data-x", translateX);
+						$("#test").attr("data-y", translateY);
+						$("#test").attr("data-scale", 2);
+					}
+				}
+
+				hammertime.on("swipe", function(e) {
+					//console.log("事件发生点(deltaX) x: "+e.deltaX + "(deltaY)  y: "+e.deltaY);
+					if($("#test").attr("data-scale") == 2) {
+						//console.log("拖动结束  " + e.deltaX + "," + e.deltaY);
+						move123(e.deltaX, e.deltaY);
+					}
+				});
+
+			});
+		</script>
+	</body>
+
+</html>
